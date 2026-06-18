@@ -172,6 +172,34 @@ img, svg { display: block; max-width: 100%; }
 .card-list li { position: relative; padding-left: 1.5rem; font-size: .94rem; color: #c2cce4; }
 .card-list li::before { content: "▹"; position: absolute; left: 0; color: var(--brand-2); font-weight: 700; }
 
+/* ---------- Produtos / Apps ---------- */
+.products { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px; }
+.product-card {
+  position: relative; display: flex; flex-direction: column;
+  flex: 1 1 300px; max-width: 350px;
+  background: linear-gradient(180deg, var(--surface), var(--bg-2));
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 22px;
+  transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
+}
+.product-card:hover { transform: translateY(-6px); border-color: rgba(34, 211, 197, .4); box-shadow: var(--shadow); }
+.product-tag {
+  align-self: flex-start; font-size: .68rem; font-weight: 600; letter-spacing: .5px;
+  text-transform: uppercase; color: var(--brand-2);
+  background: rgba(34, 211, 197, .1); border: 1px solid rgba(34, 211, 197, .22);
+  padding: .25rem .6rem; border-radius: 999px; margin-bottom: 1rem;
+}
+.product-icon {
+  width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center;
+  font-size: 1.7rem; background: rgba(79, 139, 255, .12);
+  border: 1px solid var(--line); margin-bottom: 1rem;
+}
+.product-card h3 { font-size: 1.14rem; margin-bottom: .55rem; }
+.product-card p { color: var(--muted); font-size: .92rem; line-height: 1.55; margin-bottom: 1.3rem; flex: 1; }
+.btn-product { align-self: flex-start; padding: .55rem 1.1rem; font-size: .9rem; }
+.products-note { text-align: center; color: var(--muted); margin-top: 38px; font-size: 1.02rem; }
+.products-note a { color: var(--brand-2); font-weight: 600; }
+.products-note a:hover { text-decoration: underline; }
+
 /* ---------- Split / diferenciais ---------- */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 .split-text h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); margin-bottom: 1rem; }
