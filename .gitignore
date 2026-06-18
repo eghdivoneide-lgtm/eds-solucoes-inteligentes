@@ -1,0 +1,18 @@
+# Sistema operacional
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# OneDrive / temporários
+~$*
+*.tmp
+
+# Pacotes de deploy
+*.zip
+
+# Dependências (caso futuramente use Node)
+node_modules/
+
+# Logs
+*.log
