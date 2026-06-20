@@ -1,23 +1,27 @@
 # EDS Soluções Inteligentes — Site institucional
 
-Landing page institucional em **HTML + CSS + JavaScript puro** (sem build, sem dependências).
-Abre direto no navegador e pode ser hospedada gratuitamente em Vercel, Netlify ou GitHub Pages.
+Site institucional premium em **HTML + CSS + JavaScript puro** — sem build, sem
+dependências, sem framework. Abre direto no navegador e publica em qualquer host
+estático (Netlify, Vercel, GitHub Pages).
 
 ## 📁 Estrutura
 
 ```
-SIte EDS/
-├── index.html              ← página principal
+.
+├── index.html              ← página única (todas as seções)
+├── netlify.toml            ← configuração de publicação na Netlify
 ├── assets/
-│   ├── css/style.css       ← estilos
-│   └── js/main.js          ← interações (menu, animações, formulário)
+│   ├── css/style.css       ← design system + estilos
+│   └── js/main.js          ← menu, header, revelações, formulário → WhatsApp
 └── README.md
 ```
 
-## ▶️ Como ver localmente
+## ▶️ Rodar localmente (VS Code)
 
-Basta abrir o arquivo `index.html` com dois cliques no navegador.
-(Opcional) para um servidor local, dentro da pasta rode:
+A forma mais simples é a extensão **Live Server** do VS Code: clique com o botão
+direito em `index.html` → **Open with Live Server**.
+
+Ou por linha de comando, dentro da pasta do projeto:
 
 ```bash
 # Python
@@ -28,29 +32,49 @@ npx serve
 
 E acesse `http://localhost:5500`.
 
-## ⚙️ Personalização (importante)
+## 🎨 Design system (resumo)
 
-| O quê | Onde | Detalhe |
-|-------|------|---------|
-| **Número do WhatsApp** | `assets/js/main.js`, linha `WHATSAPP_NUMERO` | Formato internacional só com dígitos: `55` + DDD + número. Ex.: `5511999999999`. **Troque o valor de exemplo!** |
-| E-mail de contato | `index.html` (`mailLink`) e no rodapé | Substitua `contato@edssolucoes.com.br` |
-| Textos / serviços | `index.html` | Seções `#servicos`, `#diferenciais`, etc. |
-| Cores da marca | `assets/css/style.css` (`:root`) | Variáveis `--brand`, `--brand-2`, `--grad` |
-| Horário de atendimento | `index.html` (bloco "Atendimento") | — |
+Tudo é controlado por variáveis em `assets/css/style.css` (`:root`):
 
-## 📨 Como funciona o formulário
+| Token | O que controla |
+|-------|----------------|
+| `--accent` | Cor de destaque única (índigo `#6e8bff`) |
+| `--ink`, `--surface` | Base near-black e superfícies elevadas |
+| `--font-display` | Títulos — **Fraunces** (serifada editorial) |
+| `--font-sans` | Corpo e UI — **Manrope** |
+| `--font-mono` | Labels técnicos — **Space Mono** |
+| `--space-section`, `--radius`, `--shadow` | Ritmo, formas e profundidade |
 
-O site é estático (sem servidor), então o formulário **monta a mensagem e abre o WhatsApp**
-da empresa já preenchido com os dados do cliente. É a forma mais simples e direta para
-um negócio captar contatos sem custo de backend.
+Trocar a identidade visual = alterar essas variáveis. Sem caça a valores soltos.
 
-> Se no futuro você quiser receber por e-mail/banco de dados, dá para integrar com
-> serviços como Formspree, Netlify Forms ou um backend próprio. É só pedir. 😉
+## ⚙️ Personalização rápida
 
-## 🚀 Publicar
+| O quê | Onde |
+|-------|------|
+| **WhatsApp** | `assets/js/main.js` → `WHATSAPP_NUMERO` (só dígitos: `55` + DDD + número) |
+| E-mail | `index.html` (`mailLink` e rodapé) |
+| Produtos / links | `index.html` → seção `#produtos` |
+| Textos das seções | `index.html` |
+| Depoimentos | `index.html` → seção `#prova` (há um bloco-modelo comentado pronto) |
+| Cores / fontes | `assets/css/style.css` (`:root`) |
 
-- **Netlify / Vercel:** arraste a pasta ou conecte o repositório — deploy automático.
-- **GitHub Pages:** suba os arquivos e ative o Pages nas configurações do repositório.
+## 📨 Formulário de contato
+
+O site é estático (sem servidor): o formulário **monta uma mensagem organizada e
+abre o WhatsApp** da empresa já preenchido. É a forma mais direta de captar contato
+sem custo de backend. Para receber por e-mail no futuro, dá para integrar com
+Netlify Forms ou Formspree.
+
+## 🚀 Publicar na Netlify
+
+1. **Via interface:** arraste a pasta do projeto em `app.netlify.com/drop`, ou
+   conecte o repositório do GitHub.
+2. Configurações de build (já cobertas pelo `netlify.toml`):
+   - **Build command:** *(vazio)*
+   - **Publish directory:** `.`
+3. Deploy automático a cada `push` no branch conectado.
+
+> GitHub Pages / Vercel também funcionam: é um site estático puro.
 
 ---
-Feito com ⚡ para a **EDS Soluções Inteligentes**.
+Feito com engenharia própria para a **EDS Soluções Inteligentes**.

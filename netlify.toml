@@ -1,0 +1,17 @@
+# Publicação na Netlify — site estático, sem build.
+[build]
+  publish = "."
+  command = ""
+
+# Cabeçalhos de segurança e cache para assets estáticos.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
