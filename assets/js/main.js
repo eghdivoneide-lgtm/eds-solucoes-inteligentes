@@ -49,8 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---- Revelação on-scroll ---- */
+  /* ---- Revelação on-scroll (com stagger por grupo) ---- */
   const reveals = document.querySelectorAll(".reveal");
+  reveals.forEach((el) => {
+    const group = Array.from(el.parentElement.children).filter((c) => c.classList.contains("reveal"));
+    el.style.setProperty("--reveal-i", Math.min(group.indexOf(el), 6));
+  });
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(
       (entries) => {
