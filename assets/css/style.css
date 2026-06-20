@@ -310,17 +310,25 @@ h1, h2, h3, h4 {
 .product { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.9rem 1.8rem; overflow: hidden; box-shadow: var(--shadow-sm); transition: transform .4s var(--ease), border-color .3s, box-shadow .4s var(--ease); }
 .product:hover { transform: translateY(-6px); border-color: var(--accent-line); box-shadow: var(--shadow); }
 
-/* Prévia frontal do app (moldura de navegador) */
-.product-shot { margin: -1.9rem -1.8rem 1.6rem; border-bottom: 1px solid var(--line); background: var(--bg-2); }
-.shot-bar { display: flex; align-items: center; gap: 6px; padding: .6rem .85rem; background: var(--surface-2); border-bottom: 1px solid var(--line-soft); }
-.shot-bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); }
-.shot-bar em { margin-left: .55rem; font-family: var(--font-mono); font-style: normal; font-size: .62rem; letter-spacing: .02em; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.shot-img { aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-2); }
-.shot-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .6s var(--ease); }
-.product:hover .shot-img img { transform: scale(1.035); }
-.shot-placeholder { display: grid; place-items: center; aspect-ratio: 16 / 10; background: linear-gradient(135deg, var(--surface-2), var(--bg-2)); position: relative; }
-.shot-placeholder::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 16px 16px; opacity: .5; }
-.shot-mono { position: relative; font-family: var(--font-mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+/* Prévia do app — miniatura em palco com a tela flutuando */
+.product-shot { position: relative; margin: -1.9rem -1.8rem 1.6rem; padding: 1.5rem 1.5rem 1.65rem; border-bottom: 1px solid var(--line); overflow: hidden; isolation: isolate; }
+.product-shot::after { content: ""; position: absolute; inset: 0; background: radial-gradient(75% 55% at 50% -8%, rgba(255,255,255,.12), transparent 70%); pointer-events: none; z-index: 0; }
+.shot-window { position: relative; z-index: 1; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 16px 34px -14px rgba(0,0,0,.6), 0 2px 6px rgba(0,0,0,.32); transition: transform .45s var(--ease), box-shadow .45s var(--ease); }
+.shot-window::before { content: ""; position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent); z-index: 2; pointer-events: none; }
+.product:hover .shot-window { transform: translateY(-5px); box-shadow: 0 28px 52px -16px rgba(0,0,0,.72), 0 3px 8px rgba(0,0,0,.36); }
+.shot-window img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; }
+/* Placeholder para apps em desenvolvimento */
+.shot-window.is-placeholder { aspect-ratio: 16 / 10; display: grid; place-content: center; justify-items: center; gap: .55rem; background: rgba(8, 10, 18, .42); }
+.shot-window.is-placeholder::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.10) 1px, transparent 1px); background-size: 15px 15px; opacity: .55; z-index: 0; }
+.shot-mono { position: relative; z-index: 1; font-family: var(--font-display); font-weight: 600; font-size: 1.18rem; letter-spacing: -.01em; color: #fff; text-align: center; padding: 0 1rem; }
+.shot-soon { position: relative; z-index: 1; font-family: var(--font-mono); font-size: .56rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: .22rem .6rem; }
+/* Palcos por app */
+.shot--gold   { background: radial-gradient(115% 125% at 16% -5%, #6a541f, #2a210f 56%, #16110a); }
+.shot--azure  { background: radial-gradient(115% 125% at 16% -5%, #234a86, #121d33 56%, #0a1120); }
+.shot--green  { background: radial-gradient(115% 125% at 16% -5%, #1d5a3c, #0e2419 56%, #07120d); }
+.shot--indigo { background: radial-gradient(115% 125% at 16% -5%, #3b3d96, #181a36 56%, #0d0e20); }
+.shot--violet { background: radial-gradient(115% 125% at 16% -5%, #5a2f7e, #241236 56%, #150a21); }
+.shot--slate  { background: radial-gradient(115% 125% at 16% -5%, #3a4254, #1a1e28 56%, #0e1118); }
 .product-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
 .product-tag { font-family: var(--font-mono); font-size: .65rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
 .product-status { font-family: var(--font-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .24rem .6rem; white-space: nowrap; }
