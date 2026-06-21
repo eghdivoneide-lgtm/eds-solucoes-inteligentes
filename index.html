@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/style.css?v=20260620e" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260620f" />
 
   <script type="application/ld+json">
   {
@@ -795,6 +795,15 @@
     </svg>
   </a>
 
-  <script src="assets/js/main.js?v=20260620e"></script>
+  <!-- ============ SMARTCOACH — guia que passeia pelo site e dá dicas ============ -->
+  <div id="mascot" aria-hidden="true">
+    <div class="m-inner" onclick="mascotPoke()">
+      <span class="m-x" onclick="mascotDismiss(event)" role="button" tabindex="0" aria-label="Dispensar Smartcoach">×</span>
+      <div class="m-bubble" id="m-bubble"></div>
+      <img class="m-img" src="assets/img/smartcoach.png" alt="Smartcoach EDS" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=20260620f"></script>
 </body>
 </html>
