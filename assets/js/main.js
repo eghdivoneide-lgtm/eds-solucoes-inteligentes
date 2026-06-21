@@ -110,3 +110,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+/* ---- Smartcoach — guia que passeia pelo site principal e dá dicas ---- */
+(function () {
+  var spots = ['4%', '42%', '70%', '26%', '58%'],
+    tips = [
+      'Oi! 👋 Sou o <b>Smartcoach</b> da EDS. Posso te mostrar o que fazemos?',
+      'A EDS cria <b>software sob medida</b>, automação e <b>IA aplicada</b>.',
+      '3 plataformas no ar: <b>LicitaEdge</b>, <b>PlanejaEdge</b> e <b>Monitor</b>.',
+      'Quer testar? Os apps têm <b>teste grátis, sem cartão</b>. 🎁',
+      'Precisa de um sistema sob medida? <b>Fale com a EDS</b>. 💬',
+      'Bateu uma dúvida? Dá uma olhada no nosso <b>FAQ</b>. ✅'
+    ],
+    i = 0, off = false;
+  var m = document.getElementById('mascot'), b = document.getElementById('m-bubble');
+  if (!m || !b) return;
+  function say(t) { b.innerHTML = t; b.classList.add('show'); clearTimeout(say._t); say._t = setTimeout(function () { b.classList.remove('show'); }, 5600); }
+  function step() { if (off) return; m.style.left = spots[i % spots.length]; say(tips[i % tips.length]); i++; }
+  window.mascotPoke = function () { if (off) return; say(tips[i % tips.length]); i++; };
+  window.mascotDismiss = function (e) { e.stopPropagation(); off = true; m.style.display = 'none'; };
+  setTimeout(function () { say(tips[0]); i = 1; }, 1600);
+  setInterval(step, 9000);
+})();

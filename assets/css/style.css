@@ -571,3 +571,19 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---- Smartcoach — guia que passeia pelo site e dá dicas ---- */
+#mascot { position: fixed; bottom: 0; left: 4%; z-index: 120; pointer-events: none; }
+.m-inner { position: relative; pointer-events: auto; cursor: pointer; }
+.m-img { display: block; height: 150px; width: auto; filter: drop-shadow(0 12px 22px rgba(13,14,19,.5)); transform-origin: bottom center; }
+.m-bubble { position: absolute; bottom: 138px; left: 50%; transform: translateX(-50%); width: 214px; background: #16171f; border: 1px solid rgba(255,255,255,.12); border-radius: 14px; border-bottom-left-radius: 3px; padding: 11px 14px 12px; font-family: var(--font-sans); font-size: 12.5px; font-weight: 600; color: #eceef6; line-height: 1.45; box-shadow: 0 16px 38px rgba(8,9,13,.5); opacity: 0; visibility: hidden; transition: opacity .35s ease; }
+.m-bubble.show { opacity: 1; visibility: visible; }
+.m-bubble b { color: #9aa3ff; }
+.m-bubble::after { content: ""; position: absolute; bottom: -7px; left: 46px; border: 7px solid transparent; border-top-color: #16171f; border-bottom: 0; }
+.m-x { position: absolute; top: 2px; right: -6px; width: 22px; height: 22px; border-radius: 50%; background: #262833; border: 1px solid rgba(255,255,255,.15); color: #cfd2e0; font-size: 13px; font-weight: 800; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+@media (prefers-reduced-motion: no-preference) {
+  #mascot { transition: left 6s cubic-bezier(.45,.05,.55,.95); }
+  .m-img { animation: mBob 2.6s ease-in-out infinite; }
+}
+@keyframes mBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@media (max-width: 760px) { .m-img { height: 104px; } .m-bubble { width: 168px; bottom: 96px; font-size: 12px; } }
