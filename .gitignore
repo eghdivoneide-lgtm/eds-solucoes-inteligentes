@@ -16,3 +16,6 @@ node_modules/
 
 # Logs
 *.log
+
+# Estado local de deploy da Netlify CLI
+.netlify/
