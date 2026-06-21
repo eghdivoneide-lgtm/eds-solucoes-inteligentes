@@ -372,6 +372,8 @@ h1, h2, h3, h4 {
 .appslide-list .ck { flex: none; width: 20px; height: 20px; margin-top: 1px; color: var(--app-accent); }
 .appslide-foot { display: flex; align-items: center; gap: 1.3rem; flex-wrap: wrap; }
 .appslide-brandline { font-family: var(--font-mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.42); }
+.appslide-login { font-size: .85rem; font-weight: 600; color: rgba(255,255,255,.78); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.32); transition: color .2s, text-decoration-color .2s; }
+.appslide-login:hover { color: #fff; text-decoration-color: var(--app-accent); }
 .appslide .btn-primary { background: var(--app-accent); color: #0b140f; }
 .appslide .btn-primary:hover { filter: brightness(1.07); transform: translateY(-2px); box-shadow: 0 18px 34px -16px var(--app-accent); }
 .appslide-soon { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--font-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.22); border-radius: 999px; padding: .62rem 1.1rem; }
