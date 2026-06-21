@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tips = [
       'Oi! 👋 Sou o <b>Smartcoach</b> da EDS. Posso te mostrar o que fazemos?',
       'A EDS cria <b>software sob medida</b>, automação e <b>IA aplicada</b>.',
-      '3 plataformas no ar: <b>LicitaEdge</b>, <b>PlanejaEdge</b> e <b>Monitor</b>.',
+      'Temos <b>LicitaEdge</b> e <b>PlanejaEdge</b> no ar, com usuários reais.',
       'Quer testar? Os apps têm <b>teste grátis, sem cartão</b>. 🎁',
       'Precisa de um sistema sob medida? <b>Fale com a EDS</b>. 💬',
       'Bateu uma dúvida? Dá uma olhada no nosso <b>FAQ</b>. ✅'
