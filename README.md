@@ -87,7 +87,7 @@ Feito com engenharia própria para a **EDS Soluções Inteligentes**.
 - **Barra de prova** com fatos verificáveis no lugar de percentuais ilustrativos.
 - **Seção Engenharia**: 6 decisões técnicas que sustentam os produtos.
 - **Vídeo em loop nos produtos** (opcional): basta colocar os arquivos em `assets/video/`.
-- Tipografia display **Geist** + **Geist Mono**, malha de gradiente animada no hero, contadores.
+- Identidade própria: papel/tinta/carimbo — **Archivo** (largura variável) nos títulos e rótulos, **IBM Plex Sans/Mono** no corpo, acento vermelho-carimbo `#c8311b`, cantos retos, grade de engenharia no hero, contadores.
 - Mascote Smartcoach desativado por padrão (`EDS_MASCOTE` em `assets/js/main.js`).
 
 ### Ativar a IA (obrigatório para a demo e o assistente funcionarem "ao vivo")
