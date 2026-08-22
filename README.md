@@ -78,3 +78,36 @@ Netlify Forms ou Formspree.
 
 ---
 Feito com engenharia própria para a **EDS Soluções Inteligentes**.
+
+## v2 — IA viva no site (ago/2026)
+
+### O que mudou
+- **Hero com demo real**: o visitante cola um trecho de edital e a IA (motor do LicitaEdge) resume em 3 pontos + alerta.
+- **Assistente "Pergunte à IA da EDS"** (canto inferior direito), com fatos da empresa e dos produtos.
+- **Barra de prova** com fatos verificáveis no lugar de percentuais ilustrativos.
+- **Seção Engenharia**: 6 decisões técnicas que sustentam os produtos.
+- **Vídeo em loop nos produtos** (opcional): basta colocar os arquivos em `assets/video/`.
+- Tipografia display **Geist** + **Geist Mono**, malha de gradiente animada no hero, contadores.
+- Mascote Smartcoach desativado por padrão (`EDS_MASCOTE` em `assets/js/main.js`).
+
+### Ativar a IA (obrigatório para a demo e o assistente funcionarem "ao vivo")
+Netlify → Site configuration → Environment variables:
+
+| Variável | Valor |
+|---|---|
+| `ANTHROPIC_API_KEY` | chave da API Anthropic (nunca vai para o navegador) |
+| `EDS_IA_MODEL` | opcional — padrão `claude-sonnet-4-5` |
+
+Sem a chave, o site continua no ar em **modo demonstração** (exemplo pré-calculado, selo "demonstração").
+A função fica em `netlify/functions/ia.js`; limites: 4.000 caracteres de entrada, 450 tokens de saída.
+
+### Vídeos dos produtos (opcional)
+Grave a tela do app (Screen Studio, Cap ou OBS), exporte **MP4 H.264, sem áudio, 6–10 s, até ~2 MB**,
+e salve como:
+
+```
+assets/video/licitaedge.mp4
+assets/video/planejaedge.mp4
+assets/video/edsvisual.mp4
+```
+O site detecta o arquivo e troca a imagem pelo vídeo automaticamente. Se não existir, mostra a imagem.

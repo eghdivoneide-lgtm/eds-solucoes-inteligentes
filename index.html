@@ -3,44 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="EDS Soluções Inteligentes — soluções digitais, automação e inteligência artificial aplicada para empresas que querem evoluir com clareza, eficiência e resultado real." />
-  <meta name="theme-color" content="#0e0f14" />
+  <meta name="description" content="EDS Soluções Inteligentes — software sob medida, automação e inteligência artificial aplicada. Plataformas próprias em produção: LicitaEdge Pro, PlanejaEdge e EDS Visual." />
+  <meta name="theme-color" content="#0b0c12" />
   <meta name="color-scheme" content="light dark" />
-  <link rel="canonical" href="https://eds-solucoes-inteligentes.netlify.app/" />
+  <link rel="canonical" href="https://edssi.com.br/" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" type="image/png" sizes="512x512" href="assets/img/icon-512.png" />
   <link rel="apple-touch-icon" href="assets/img/icon-512.png" />
 
   <meta property="og:site_name" content="EDS Soluções Inteligentes" />
-  <meta property="og:title" content="EDS Soluções Inteligentes — Tecnologia aplicada a resultado real" />
-  <meta property="og:description" content="Software sob medida, automação e IA aplicada. Plataformas próprias no ar: LicitaEdge Pro e PlanejaEdge." />
+  <meta property="og:title" content="EDS Soluções Inteligentes — IA aplicada que entra em operação" />
+  <meta property="og:description" content="Software sob medida, automação e IA aplicada. Teste a IA no próprio site. Plataformas próprias no ar: LicitaEdge Pro, PlanejaEdge e EDS Visual." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:url" content="https://eds-solucoes-inteligentes.netlify.app/" />
-  <meta property="og:image" content="https://eds-solucoes-inteligentes.netlify.app/assets/img/og-cover.jpg" />
+  <meta property="og:url" content="https://edssi.com.br/" />
+  <meta property="og:image" content="https://edssi.com.br/assets/img/og-cover.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="EDS Soluções Inteligentes — software, automação e IA aplicada" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="EDS Soluções Inteligentes — Tecnologia aplicada a resultado real" />
+  <meta name="twitter:title" content="EDS Soluções Inteligentes — IA aplicada que entra em operação" />
   <meta name="twitter:description" content="Software sob medida, automação e IA aplicada. Plataformas próprias no ar." />
-  <meta name="twitter:image" content="https://eds-solucoes-inteligentes.netlify.app/assets/img/og-cover.jpg" />
+  <meta name="twitter:image" content="https://edssi.com.br/assets/img/og-cover.jpg" />
   <title>EDS Soluções Inteligentes — Tecnologia aplicada a resultado real</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/style.css?v=20260620g" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260822a" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "EDS Soluções Inteligentes",
-    "url": "https://eds-solucoes-inteligentes.netlify.app/",
-    "logo": "https://eds-solucoes-inteligentes.netlify.app/assets/img/icon-512.png",
-    "image": "https://eds-solucoes-inteligentes.netlify.app/assets/img/og-cover.jpg",
+    "url": "https://edssi.com.br/",
+    "logo": "https://edssi.com.br/assets/img/icon-512.png",
+    "image": "https://edssi.com.br/assets/img/og-cover.jpg",
     "description": "Software sob medida, automação e IA aplicada, com plataformas próprias em produção.",
     "founder": { "@type": "Person", "name": "Egnaldo Dias da Silva" },
     "foundingDate": "2026-03",
@@ -75,10 +75,10 @@
       <nav class="nav" id="nav" aria-label="Navegação principal">
         <a href="#solucoes">Soluções</a>
         <a href="#produtos">Produtos</a>
+        <a href="#engenharia">Engenharia</a>
         <a href="#metodo">Método</a>
         <a href="#sobre">Sobre</a>
         <a href="#faq">FAQ</a>
-        <a href="#contato">Contato</a>
         <a href="#contato" class="btn btn-primary btn-sm btn-nav">Falar com a EDS</a>
       </nav>
 
@@ -89,101 +89,64 @@
   </header>
 
   <main id="inicio">
-    <!-- ============ HERO (faixa escura) ============ -->
+    <!-- ============ HERO — IA viva ============ -->
     <section class="hero theme-dark">
+      <canvas class="hero-mesh" id="heroMesh" aria-hidden="true"></canvas>
       <div class="container hero-inner">
         <div class="hero-content">
-          <p class="eyebrow reveal">Soluções inteligentes · Tecnologia aplicada</p>
+          <p class="eyebrow reveal"><span class="live-dot"></span>3 plataformas de IA em produção</p>
           <h1 class="hero-title reveal">
-            Software, automação e IA aplicada — construídos para <em>entrar em operação e ficar de pé.</em>
+            IA aplicada que <em>entra em operação</em> — não fica na demonstração.
           </h1>
           <p class="hero-lead reveal">
-            Engenharia própria, do diagnóstico à evolução contínua. A <strong>EDS Soluções Inteligentes</strong>
-            entrega soluções que rodam todo dia — não apenas demonstrações.
+            Software sob medida, automação e inteligência artificial com escopo definido e resultado
+            auditável. A <strong>EDS Soluções Inteligentes</strong> constrói o que roda todo dia.
           </p>
           <div class="hero-actions reveal">
             <a href="#contato" class="btn btn-primary btn-lg">Solicitar uma conversa</a>
-            <a href="#solucoes" class="btn btn-line btn-lg">Conhecer soluções</a>
+            <a href="#produtos" class="btn btn-line btn-lg">Ver produtos no ar</a>
           </div>
-          <p class="hero-microcopy reveal">Soluções sob medida, produtos próprios e tecnologia aplicada a desafios reais.</p>
-          <div class="hero-trust reveal">
-            <span class="hero-trust-label">No ar</span>
-            <ul class="hero-trust-list">
-              <li>LicitaEdge Pro</li>
-              <li>EDS PlanejaEdge</li>
-              <li>EDS Visual</li>
-            </ul>
-          </div>
+          <ul class="hero-facts reveal" aria-label="Plataformas em produção">
+            <li><strong>LicitaEdge Pro</strong><span>Licitações · Lei 14.133</span></li>
+            <li><strong>PlanejaEdge</strong><span>Educação · BNCC</span></li>
+            <li><strong>EDS Visual</strong><span>Imagem · IA generativa</span></li>
+          </ul>
         </div>
 
-        <div class="hero-visual reveal" aria-hidden="true">
-          <div class="panel panel-main">
-            <div class="panel-head">
-              <span class="panel-dot"></span>
-              <span class="panel-title">Operação — visão geral</span>
-              <span class="panel-tag">ao vivo</span>
+        <!-- Demo real: o visitante usa a IA antes de falar com a gente -->
+        <div class="hero-visual reveal">
+          <div class="demo" id="demoEdital">
+            <div class="demo-head">
+              <span class="demo-dot"></span>
+              <span class="demo-title">LicitaEdge Pro · análise de edital</span>
+              <span class="demo-tag" id="demoTag">ao vivo</span>
             </div>
-            <ul class="panel-rows">
-              <li>
-                <span class="panel-label">Processos automatizados</span>
-                <span class="panel-track"><i style="--w:78%"></i></span>
-                <span class="panel-value">78%</span>
-              </li>
-              <li>
-                <span class="panel-label">Informação centralizada</span>
-                <span class="panel-track"><i style="--w:91%"></i></span>
-                <span class="panel-value">91%</span>
-              </li>
-              <li>
-                <span class="panel-label">Tempo de resposta operacional</span>
-                <span class="panel-track"><i style="--w:64%"></i></span>
-                <span class="panel-value">−64%</span>
-              </li>
-            </ul>
-          </div>
-          <div class="panel panel-float">
-            <span class="panel-float-label">Portfólio próprio</span>
-            <p class="panel-float-value">3 plataformas <span>no ar</span></p>
-            <p class="panel-float-sub">+ 2 produtos em desenvolvimento</p>
+            <label class="demo-label" for="demoInput">Cole um trecho de edital e veja a IA trabalhar</label>
+            <textarea id="demoInput" class="demo-input" rows="5" maxlength="4000" spellcheck="false" placeholder="Ex.: Pregão Eletrônico nº 12/2026. Objeto: aquisição de 40 notebooks… Critério de julgamento: menor preço por item. Prazo de entrega: 30 dias…"></textarea>
+            <div class="demo-actions">
+              <button type="button" class="btn btn-primary" id="demoRun">Analisar com IA
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+              <button type="button" class="demo-sample" id="demoSample">Usar um exemplo</button>
+            </div>
+            <div class="demo-out" id="demoOut" aria-live="polite"></div>
+            <p class="demo-foot">Processado no servidor. Nada do que você cola é armazenado. <a href="https://eds-licitaedg-pro.netlify.app/landing/" target="_blank" rel="noopener">Conhecer o LicitaEdge Pro →</a></p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ AUTORIDADE (faixa escura) ============ -->
-    <section class="authority theme-dark" id="autoridade" aria-label="Autoridade da EDS">
-      <div class="container authority-inner">
-        <div class="authority-text reveal">
-          <p class="eyebrow">Autoridade</p>
-          <h2>Tecnologia com direção, estrutura e aplicação prática.</h2>
-          <p>
-            A EDS Soluções Inteligentes desenvolve soluções que unem visão estratégica, organização,
-            automação e inteligência aplicada — transformando desafios reais em processos mais
-            eficientes, decisões mais inteligentes e operações mais maduras.
-          </p>
-        </div>
-        <ul class="pillars reveal">
-          <li>
-            <h3>Soluções sob medida para operações reais</h3>
-            <p>Cada projeto parte do seu processo e dos seus números — não de um template reaproveitado.</p>
-          </li>
-          <li>
-            <h3>Automação com foco em eficiência e escala</h3>
-            <p>Rotinas que reduzem trabalho manual hoje e continuam de pé quando o volume cresce.</p>
-          </li>
-          <li>
-            <h3>Produtos próprios em produção e desenvolvimento</h3>
-            <p>Construímos plataformas que vão ao ar, não apenas atendemos demanda pontual.</p>
-          </li>
-          <li>
-            <h3>Atuação com visão prática e evolução contínua</h3>
-            <p>Entregamos, medimos o impacto e seguimos evoluindo com o uso real da solução.</p>
-          </li>
-        </ul>
+    <!-- ============ PROVA — fatos, não slogans ============ -->
+    <section class="proofbar theme-dark" aria-label="Fatos sobre a EDS">
+      <div class="container proofbar-inner">
+        <div class="stat reveal"><span class="stat-num" data-count="3">0</span><span class="stat-label">plataformas de IA em produção</span></div>
+        <div class="stat reveal"><span class="stat-num" data-count="2">0</span><span class="stat-label">produtos em desenvolvimento</span></div>
+        <div class="stat reveal"><span class="stat-num"><span data-count="24">0</span>/7</span><span class="stat-label">uptime monitorado, alerta em minutos</span></div>
+        <div class="stat reveal"><span class="stat-num">LGPD</span><span class="stat-label">isolamento por usuário, chaves nunca no navegador</span></div>
       </div>
     </section>
 
-    <!-- ============ SOLUÇÕES (claro) ============ -->
+<!-- ============ SOLUÇÕES (claro) ============ -->
     <section class="section" id="solucoes">
       <div class="container">
         <header class="section-head reveal">
@@ -309,7 +272,10 @@
             </div>
             <div class="appslide-device">
               <span class="appslide-index">01 / 05</span>
-              <div class="device"><div class="device-screen"><img src="assets/img/phone-licitaedge.jpg" alt="App EDS LicitaEdge Pro no celular" loading="lazy" decoding="async" width="390" height="844" /></div></div>
+              <div class="device"><div class="device-screen">
+                <video class="device-video" autoplay muted loop playsinline preload="metadata" poster="assets/img/phone-licitaedge.jpg" aria-label="App EDS LicitaEdge Pro no celular" data-src="assets/video/licitaedge.mp4"></video>
+                <img src="assets/img/phone-licitaedge.jpg" alt="App EDS LicitaEdge Pro no celular" loading="lazy" decoding="async" width="390" height="844" />
+              </div></div>
             </div>
           </article>
 
@@ -337,7 +303,10 @@
             </div>
             <div class="appslide-device">
               <span class="appslide-index">02 / 05</span>
-              <div class="device"><div class="device-screen"><img src="assets/img/phone-planejaedge.jpg" alt="App EDS PlanejaEdge no celular" loading="lazy" decoding="async" width="390" height="844" /></div></div>
+              <div class="device"><div class="device-screen">
+                <video class="device-video" autoplay muted loop playsinline preload="metadata" poster="assets/img/phone-planejaedge.jpg" aria-label="App EDS PlanejaEdge no celular" data-src="assets/video/planejaedge.mp4"></video>
+                <img src="assets/img/phone-planejaedge.jpg" alt="App EDS PlanejaEdge no celular" loading="lazy" decoding="async" width="390" height="844" />
+              </div></div>
             </div>
           </article>
 
@@ -365,9 +334,10 @@
             </div>
             <div class="appslide-device">
               <span class="appslide-index">03 / 05</span>
-              <div style="max-width:360px;width:100%;margin:0 auto;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.45);background:#0b1220;">
-                <img src="assets/img/phone-edsvisual.png" alt="App EDS Visual" loading="lazy" decoding="async" onerror="if(this.src.endsWith('.png')){this.src='assets/img/phone-edsvisual.jpg'}else{this.style.display='none'}" style="display:block;width:100%;height:auto;">
-              </div>
+              <div class="device device-wide"><div class="device-screen">
+                <video class="device-video" autoplay muted loop playsinline preload="metadata" poster="assets/img/phone-edsvisual.png" aria-label="App EDS Visual" data-src="assets/video/edsvisual.mp4"></video>
+                <img src="assets/img/phone-edsvisual.png" alt="App EDS Visual" loading="lazy" decoding="async" />
+              </div></div>
             </div>
           </article>
 
@@ -428,6 +398,53 @@
           Quer um produto desenvolvido para o seu negócio?
           <a href="#contato">Conte o desafio para a EDS.</a>
         </p>
+      </div>
+    </section>
+
+    <!-- ============ ENGENHARIA — como construímos ============ -->
+    <section class="section" id="engenharia">
+      <div class="container">
+        <header class="section-head section-head-left reveal">
+          <p class="eyebrow">Engenharia</p>
+          <h2>Como colocamos IA em produção sem virar promessa.</h2>
+          <p class="section-lead">
+            Decisões técnicas que aparecem em todos os nossos produtos — e que você pode cobrar
+            em qualquer projeto sob medida.
+          </p>
+        </header>
+
+        <div class="notes">
+          <article class="note reveal">
+            <span class="note-tag">01 · Escopo</span>
+            <h3>IA com tarefa definida, não "IA genérica"</h3>
+            <p>Cada modelo entra para resolver uma tarefa específica: interpretar um edital, gerar um plano de aula na BNCC, restaurar uma foto. Resultado que dá para auditar, comparar e melhorar.</p>
+          </article>
+          <article class="note reveal">
+            <span class="note-tag">02 · Segurança</span>
+            <h3>Chaves de IA nunca no navegador</h3>
+            <p>Toda chamada a modelos passa por funções no servidor, com limite de tamanho e de tokens. A demo deste site usa exatamente essa arquitetura: o que você cola não é armazenado.</p>
+          </article>
+          <article class="note reveal">
+            <span class="note-tag">03 · Dados</span>
+            <h3>Isolamento por usuário desde o dia zero</h3>
+            <p>Autenticação, políticas de acesso por linha e LGPD fazem parte da fundação dos produtos, não de uma fase "de segurança" no final.</p>
+          </article>
+          <article class="note reveal">
+            <span class="note-tag">04 · Operação</span>
+            <h3>Monitorado 24/7, com alerta em minutos</h3>
+            <p>Cada plataforma tem verificação de disponibilidade e de conteúdo a cada 5 minutos. Se algo cai, a equipe sabe antes do cliente.</p>
+          </article>
+          <article class="note reveal">
+            <span class="note-tag">05 · Entrega</span>
+            <h3>PWA: instala no celular, sem loja</h3>
+            <p>Os apps funcionam no computador e no celular, podem ser instalados na tela inicial e atualizam sozinhos — sem depender de aprovação de app store.</p>
+          </article>
+          <article class="note reveal">
+            <span class="note-tag">06 · Evolução</span>
+            <h3>Medir o uso real, depois evoluir</h3>
+            <p>Colocamos no ar cedo, observamos como o usuário usa e priorizamos o que muda resultado. Produto vivo, não entrega e sumiço.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -752,6 +769,7 @@
         <h4>Navegação</h4>
         <a href="#solucoes">Soluções</a>
         <a href="#produtos">Produtos</a>
+        <a href="#engenharia">Engenharia</a>
         <a href="#metodo">Método</a>
         <a href="#sobre">Sobre</a>
         <a href="#faq">FAQ</a>
@@ -773,21 +791,53 @@
     </div>
   </footer>
 
-  <a href="#" id="whatsFloat" class="whats-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <a href="#" id="whatsFloat" class="whats-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
     <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
       <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
     </svg>
   </a>
 
-  <!-- ============ SMARTCOACH — guia que passeia pelo site e dá dicas ============ -->
-  <div id="mascot" aria-hidden="true">
-    <div class="m-inner" onclick="mascotPoke()">
-      <span class="m-x" onclick="mascotDismiss(event)" role="button" tabindex="0" aria-label="Dispensar Smartcoach">×</span>
-      <div class="m-bubble" id="m-bubble"></div>
-      <img class="m-img" src="assets/img/smartcoach.png" alt="Smartcoach EDS" onerror="this.style.display='none'">
+  <!-- ============ ASSISTENTE — pergunte à EDS ============ -->
+  <div class="assist" id="assist">
+    <button type="button" class="assist-toggle" id="assistToggle" aria-expanded="false" aria-controls="assistPanel">
+      <span class="assist-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      </span>
+      <span class="assist-txt">Pergunte à IA da EDS</span>
+    </button>
+    <div class="assist-panel" id="assistPanel" hidden>
+      <div class="assist-head">
+        <strong>Assistente EDS</strong>
+        <span>responde sobre produtos, serviços e como começar</span>
+        <button type="button" class="assist-close" id="assistClose" aria-label="Fechar">×</button>
+      </div>
+      <div class="assist-log" id="assistLog" aria-live="polite">
+        <div class="msg msg-ai">Oi! Sou a IA da EDS. Posso explicar o que o LicitaEdge, o PlanejaEdge e o EDS Visual fazem, ou como funciona um projeto sob medida. O que você quer saber?</div>
+      </div>
+      <div class="assist-chips" id="assistChips">
+        <button type="button">Como testar o LicitaEdge grátis?</button>
+        <button type="button">Vocês fazem sistema sob medida?</button>
+        <button type="button">Meus dados ficam protegidos?</button>
+      </div>
+      <form class="assist-form" id="assistForm">
+        <input type="text" id="assistInput" maxlength="600" placeholder="Escreva sua pergunta…" autocomplete="off" />
+        <button type="submit" class="btn btn-primary btn-sm" aria-label="Enviar">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <p class="assist-foot">Respostas geradas por IA com base nas informações públicas da EDS. Para orçamento, fale no WhatsApp.</p>
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260620g"></script>
+  <!-- ============ SMARTCOACH — mascote (desativado por padrão; ligue em main.js: EDS_MASCOTE = true) ============ -->
+  <div id="mascot" aria-hidden="true" hidden>
+    <div class="m-inner" onclick="mascotPoke()">
+      <span class="m-x" onclick="mascotDismiss(event)" role="button" tabindex="0" aria-label="Dispensar Smartcoach">×</span>
+      <div class="m-bubble" id="m-bubble"></div>
+      <img class="m-img" src="assets/img/smartcoach.png" alt="Smartcoach EDS" loading="lazy" onerror="this.style.display='none'">
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=20260822a"></script>
 </body>
 </html>
