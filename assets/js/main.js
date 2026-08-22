@@ -47,6 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const setMenu = (open) => {
       nav.classList.toggle("open", open);
       toggle.classList.toggle("open", open);
+      // Com o menu aberto a barra vira papel, para topo e painel formarem
+      // uma superfície só mesmo quando o hero escuro está atrás.
+      if (header) header.classList.toggle("menu-open", open);
       toggle.setAttribute("aria-expanded", String(open));
     };
     toggle.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
