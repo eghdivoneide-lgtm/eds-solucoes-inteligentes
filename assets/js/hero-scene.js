@@ -121,7 +121,7 @@ window.EDS_initHeroScene3D = function (canvas) {
   }, { passive: true });
 
   /* ---- loop ---- */
-  let raf = 0, running = false, speed = 0.65, t = 0;
+  let raf = 0, running = false, speed = 2.6, t = 0;
   const tmpColor = new THREE.Color();
 
   const frame = () => {
@@ -151,15 +151,26 @@ window.EDS_initHeroScene3D = function (canvas) {
     ledMesh.instanceMatrix.needsUpdate = true;
     ledMeshV.instanceMatrix.needsUpdate = true;
 
-    core.rotation.y += 0.0035;
-    core.rotation.x += 0.0012;
-    coreWire.rotation.y -= 0.002;
-    const pulse = 1 + Math.sin(t * 1.4) * 0.06;
-    core.scale.setScalar(pulse);
-    coreWire.scale.setScalar(pulse * 1.02);
+    // Racks "respirando" e LEDs cintilando — corredor de servidor vivo, não cenário parado
+    rackMat.emissiveIntensity = 0.55 + Math.sin(t * 1.1) * 0.25;
+    ledMatCyan.opacity = 0.7 + Math.max(0, Math.sin(t * 6.5)) * 0.3;
+    ledMatViolet.opacity = 0.7 + Math.max(0, Math.sin(t * 6.5 + 1.7)) * 0.3;
+    rimA.intensity = 3.2 + Math.sin(t * 0.9) * 1.6;
+    rimB.intensity = 3.2 + Math.cos(t * 0.75) * 1.6;
 
-    camera.position.x += (pointer.x * 0.55 - camera.position.x) * 0.04;
-    camera.position.y += (0.35 - pointer.y * 0.32 - camera.position.y) * 0.04;
+    core.rotation.y += 0.014;
+    core.rotation.x += 0.006;
+    coreWire.rotation.y -= 0.009;
+    coreWire.rotation.x += 0.004;
+    const pulse = 1 + Math.sin(t * 1.8) * 0.14;
+    core.scale.setScalar(pulse);
+    coreWire.scale.setScalar(pulse * 1.05);
+    coreLight.intensity = 11 + Math.sin(t * 1.8) * 6 + Math.sin(t * 5.3) * 2;
+
+    // Balanço autônomo da câmera (viva mesmo sem o mouse em cima) + parallax do ponteiro por cima
+    const sway = Math.sin(t * 0.35) * 0.28;
+    camera.position.x += (pointer.x * 0.6 + sway - camera.position.x) * 0.05;
+    camera.position.y += (0.35 - pointer.y * 0.34 + Math.cos(t * 0.28) * 0.1 - camera.position.y) * 0.05;
     camera.lookAt(0, 0.4, -6);
 
     renderer.render(scene, camera);

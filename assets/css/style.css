@@ -559,6 +559,36 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
   .reveal { opacity: 1; transform: none; }
 }
 
+/* ============ 21. VIDA NO RESTO DO SITE — tilt 3D + glow ambiente ============
+   Ver assets/js/ambient.js. Sem isso o site ficava todo estático fora do
+   hero/vitrine — reação direta ao feedback de que "as figuras estão quase
+   estáticas e o resto do site ficou todo estático". */
+.tilt { transition: transform .5s var(--ease); transform-style: preserve-3d; will-change: transform; position: relative; }
+.tilt::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2; border-radius: inherit;
+  background: radial-gradient(220px circle at var(--tilt-x, 50%) var(--tilt-y, 50%), rgba(79, 227, 255, .16), transparent 62%);
+  opacity: 0; transition: opacity .35s;
+}
+.tilt:hover::after { opacity: 1; }
+/* Elementos sem posição própria (ex.: <li> de .diffs, .faq-item) precisam de
+   isolamento pra o brilho não vazar por cima dos vizinhos. */
+.diffs li.tilt, .faq-item.tilt, .stat.tilt { isolation: isolate; }
+
+.ambient-glow { position: relative; overflow: hidden; }
+.ambient-glow::before {
+  content: ""; position: absolute; inset: -25%; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(480px circle at 22% 28%, rgba(79, 227, 255, .13), transparent 62%),
+    radial-gradient(420px circle at 78% 68%, rgba(143, 123, 255, .13), transparent 62%);
+  animation: ambientDrift 15s ease-in-out infinite alternate;
+}
+.ambient-glow > * { position: relative; z-index: 1; }
+@keyframes ambientDrift {
+  0%   { transform: translate(-4%, -2%) scale(1); }
+  50%  { transform: translate(3%, 4%) scale(1.1); }
+  100% { transform: translate(-2%, 3%) scale(1.02); }
+}
+
 /* ---- Smartcoach — guia que passeia pelo site e dá dicas ---- */
 #mascot { position: fixed; bottom: 0; left: 4%; z-index: 120; pointer-events: none; }
 #mascot[hidden] { display: none; }

@@ -91,6 +91,8 @@ window.EDS_initProductScene3D = function () {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
     renderer.setSize(vw, vh, false);
     renderer.setScissorTest(true);
+    rimA.intensity = 3.2 + Math.sin(t * 1.1) * 1.4;
+    rimB.intensity = 2.6 + Math.cos(t * 0.95) * 1.2;
 
     alvos.forEach(({ frame: el }, i) => {
       const group = items[i];
@@ -109,9 +111,12 @@ window.EDS_initProductScene3D = function () {
       camera.updateProjectionMatrix();
 
       const ph = group.userData.phase;
-      group.rotation.y = pointer.x * 0.46 + Math.sin(t * 0.45 + ph) * 0.09;
-      group.rotation.x = -pointer.y * 0.24 + Math.cos(t * 0.38 + ph) * 0.05;
-      group.position.y = Math.sin(t * 0.7 + ph) * 0.045;
+      // Balanço de vitrine — arco bem mais largo/rápido que antes, mas sem girar 360°
+      // (a tela precisa continuar visível a maior parte do tempo: é o print real do app).
+      group.rotation.y = Math.sin(t * 0.6 + ph) * 0.5 + pointer.x * 0.42;
+      group.rotation.x = Math.sin(t * 0.42 + ph * 1.3) * 0.16 - pointer.y * 0.22;
+      group.rotation.z = Math.sin(t * 0.28 + ph) * 0.05;
+      group.position.y = Math.sin(t * 0.9 + ph) * 0.09;
 
       renderer.render(scene, camera);
     });
