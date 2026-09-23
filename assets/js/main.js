@@ -269,10 +269,13 @@ document.addEventListener("DOMContentLoaded", () => {
     io.observe(canvas);
   }
 
-  /* ---- Mockups 3D dos apps na vitrine (mesma regra do hero: só em tela
-     larga e sem prefers-reduced-motion; se falhar, os cards planos com
-     print/vídeo de cada app continuam exatamente como estavam). ---- */
-  if (!reduced && window.innerWidth >= 900 && window.EDS_initProductScene3D) {
+  /* ---- Mockups 3D dos apps na vitrine ----
+     Ao contrário da cena do Hero (corredor + neblina + várias luzes, bem
+     mais pesada), essa cena é 3 malhas simples com um único contexto WebGL
+     — cabe tranquilamente em celular. Regra bem mais permissiva: qualquer
+     tela a partir de ~380px (ou seja, praticamente todo celular moderno),
+     só respeitando "reduzir movimento" e a existência de WebGL de verdade. */
+  if (!reduced && window.innerWidth >= 340 && window.EDS_initProductScene3D) {
     try { window.EDS_initProductScene3D(); } catch (e) { /* mantém os cards planos */ }
   }
 
