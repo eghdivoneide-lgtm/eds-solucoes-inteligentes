@@ -130,8 +130,11 @@ window.EDS_initProductScene3D = function () {
   alvos.forEach(({ frame: el }) => io.observe(el));
   window.addEventListener("resize", () => { renderer.setSize(window.innerWidth, window.innerHeight, false); }, { passive: true });
 
-  // Some o frame CSS plano: o canvas 3D assume o lugar exato dele na tela.
-  alvos.forEach(({ frame: el }) => { el.style.visibility = "hidden"; });
+  // Esmaece o frame CSS plano (em vez de sumir de golpe) — dá tempo das
+  // texturas carregarem antes da troca, sem "flash" de vazio no meio.
+  setTimeout(() => {
+    alvos.forEach(({ frame: el }) => { el.classList.add("is-3d-active"); });
+  }, 260);
 
   return true;
 };

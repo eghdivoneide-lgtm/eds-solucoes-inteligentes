@@ -27,7 +27,7 @@
   --heading:   #f1f4ff;
   --text:      #cdd3ea;
   --muted:     #8b93b5;
-  --faint:     #59607f;
+  --faint:     #7681a8; /* contraste 5.1:1 sobre --bg — corrigido em auditoria WCAG AA (era 3.17:1) */
 
   --accent:     #4fe3ff;            /* ciano elétrico — único acento */
   --accent-2:   #8f7bff;            /* violeta — usado em gradientes/partículas */
@@ -69,7 +69,7 @@
   --heading:   #f6f8ff;
   --text:      #d7dcf2;
   --muted:     #97a0c4;
-  --faint:     #5b6284;
+  --faint:     #828bb0; /* contraste 6.05:1 sobre --bg — corrigido em auditoria WCAG AA */
 
   --accent:     #6ee9ff;            /* ciano mais claro sobre o vazio */
   --accent-2:   #a695ff;
@@ -158,7 +158,9 @@ h3, h4 { font-stretch: 100%; letter-spacing: -.015em; }
 .btn-line { border-color: var(--line-strong); }
 .btn-line:hover { border-color: var(--accent); color: var(--heading); transform: translateY(-2px); box-shadow: 0 0 0 1px var(--accent-line), 0 16px 36px -14px var(--accent-soft); }
 
-.btn-whats { background: var(--whats); color: #fff; }
+/* Texto escuro em vez de branco: branco sobre --whats dava 2.87:1 (falha
+   WCAG AA mesmo pra texto grande) — achado na auditoria de contraste. */
+.btn-whats { background: var(--whats); color: #04140a; }
 .btn-whats:hover { filter: brightness(1.05); transform: translateY(-2px); box-shadow: 0 18px 30px -14px rgba(30, 175, 82, .55); }
 
 .btn-sm { padding: .64rem 1.15rem; font-size: .9rem; }
@@ -494,7 +496,7 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
 .whats-float {
   position: fixed; bottom: 22px; right: 22px; z-index: 90;
   width: 54px; height: 54px; border-radius: var(--radius-sm);
-  background: var(--whats); color: #fff; display: grid; place-items: center;
+  background: var(--whats); color: #04140a; display: grid; place-items: center;
   box-shadow: 0 18px 34px -12px rgba(30, 175, 82, .5);
   transition: transform .3s var(--ease), box-shadow .3s;
 }
@@ -572,7 +574,7 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
 .tilt:hover::after { opacity: 1; }
 /* Elementos sem posição própria (ex.: <li> de .diffs, .faq-item) precisam de
    isolamento pra o brilho não vazar por cima dos vizinhos. */
-.diffs li.tilt, .faq-item.tilt, .stat.tilt { isolation: isolate; }
+.diffs li.tilt, .faq-item.tilt, .stat.tilt, .method-step.tilt { isolation: isolate; }
 
 .ambient-glow { position: relative; overflow: hidden; }
 .ambient-glow::before {
@@ -609,7 +611,12 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
 /* ============ 16. HERO v2 — malha animada + demo de IA ============ */
 .hero { background: var(--bg); }
 .hero::before, .hero::after { display: none; }
-.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity .6s var(--ease); }
+.hero-canvas.is-ready { opacity: 1; }
+/* Mockups de produto: o <div class="device"> plano esmaece enquanto o canvas
+   3D (fixed, fora desse fluxo) aparece por cima — sem o "pop" instantâneo. */
+.appslide-device .device { transition: opacity .5s var(--ease); }
+.appslide-device .device.is-3d-active { opacity: 0; pointer-events: none; }
 .hero-grid { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--line-soft) 1px, transparent 1px), linear-gradient(90deg, var(--line-soft) 1px, transparent 1px); background-size: 56px 56px; opacity: .4; mask-image: linear-gradient(180deg, rgba(0,0,0,.9), transparent 85%); -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.9), transparent 85%); }
 .hero-ruler { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; padding: 0 24px 10px; font-family: var(--font-mono); font-size: .6rem; color: var(--faint); pointer-events: none; }
 .hero-ruler span { position: relative; padding-top: 12px; }

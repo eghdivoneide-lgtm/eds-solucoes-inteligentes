@@ -166,6 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.hidden = true;
     try { usou3D = window.EDS_initHeroScene3D(canvas3D); } catch (e) { usou3D = false; }
     if (!usou3D) { canvas3D.hidden = true; canvas.hidden = false; }
+    // rAF duplo = pelo menos um quadro já desenhado antes de aparecer —
+    // sem isso dava pra ver o canvas "piscar" vazio um instante ao carregar.
+    else requestAnimationFrame(() => requestAnimationFrame(() => canvas3D.classList.add("is-ready")));
   }
   if (canvas && !reduced && !usou3D) {
     const ctx = canvas.getContext("2d");
@@ -265,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     resize(); window.addEventListener("resize", resize, { passive: true });
+    requestAnimationFrame(() => requestAnimationFrame(() => canvas.classList.add("is-ready")));
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { if (!raf) raf = requestAnimationFrame(draw); } else { cancelAnimationFrame(raf); raf = 0; } });
     io.observe(canvas);
   }
