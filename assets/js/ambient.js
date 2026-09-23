@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (reduced) return;
 
   /* ---- Tilt 3D nos cards (Soluções, Notas de engenharia, Prova, Diferenciais, FAQ) ---- */
-  const TILT_SELECTOR = ".solution, .note, .proof-card, .diffs li, .faq-item, .stat";
+  const TILT_SELECTOR = ".solution, .note, .proof-card, .diffs li, .faq-item, .stat, .method-step";
   const cards = document.querySelectorAll(TILT_SELECTOR);
   const MAX_DEG = 7;
   cards.forEach((card) => {
