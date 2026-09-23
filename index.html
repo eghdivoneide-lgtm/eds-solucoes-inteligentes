@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="EDS Soluções Inteligentes — software sob medida, automação e inteligência artificial aplicada. Plataformas próprias em produção: LicitaEdge Pro, PlanejaEdge e EDS Visual." />
-  <meta name="theme-color" content="#101512" />
+  <meta name="theme-color" content="#04060b" />
   <meta name="color-scheme" content="light dark" />
   <link rel="canonical" href="https://edssi.com.br/" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="assets/css/style.css?v=20260822c" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260923a" />
 
   <script type="application/ld+json">
   {
@@ -93,6 +93,8 @@
   <main id="inicio">
     <!-- ============ HERO — IA viva ============ -->
     <section class="hero theme-dark">
+      <canvas id="heroScene3D" class="hero-canvas" aria-hidden="true" hidden></canvas>
+      <canvas id="heroMesh" class="hero-canvas" aria-hidden="true"></canvas>
       <div class="hero-grid" aria-hidden="true"></div>
       <div class="hero-ruler" aria-hidden="true"><span>00</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span></div>
       <div class="container hero-inner">
@@ -843,6 +845,18 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260822c"></script>
+  <!-- ÚNICA EXCEÇÃO AO "SEM DEPENDÊNCIAS" (ver assets/js/main.js): cena 3D
+       do hero (corredor + núcleo) pede WebGL de verdade, inviável em canvas
+       2D puro. Versão travada + hash de integridade calculado localmente
+       (sha384 do arquivo baixado, não copiado de terceiros) — mesmo cuidado
+       de supply-chain do restante do ecossistema EDS. Carregada com defer:
+       se falhar (bloqueio de rede, CDN fora), hero-scene.js nunca roda e o
+       main.js cai sozinho no fallback de partículas 2D. -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"
+          integrity="sha384-qOkzR5Ke/XkQxuGVJ9hpFEpDlcoLtWwVYhnJf06cLIZa2vaIptSqaubivErzmD5O"
+          crossorigin="anonymous" defer></script>
+  <script src="assets/js/hero-scene.js?v=20260923a" defer></script>
+  <script src="assets/js/products-scene.js?v=20260923a" defer></script>
+  <script src="assets/js/main.js?v=20260923a" defer></script>
 </body>
 </html>
