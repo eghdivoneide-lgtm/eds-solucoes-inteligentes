@@ -151,34 +151,132 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---- Malha de gradiente animada (canvas leve, sem libs) ---- */
+  /* ---- Cena do hero: 3D (Three.js) em telas largas, partículas 2D no resto ----
+     A cena 3D custa bateria e só compensa em tela grande, onde dá pra ver o
+     corredor de verdade. Em celular (a maioria do tráfego real) fica no
+     canvas 2D, bem mais barato. Qualquer falha no WebGL (driver, navegador
+     antigo, THREE que não carregou) cai automaticamente pro 2D também. */
+  const canvas3D = document.getElementById("heroScene3D");
   const canvas = document.getElementById("heroMesh");
-  if (canvas && !reduced) {
+  let usou3D = false;
+  if (canvas3D && !reduced && window.innerWidth >= 900 && window.EDS_initHeroScene3D) {
+    // Precisa estar visível ANTES de iniciar: a cena mede o tamanho real do
+    // canvas pra configurar o renderer, e um <canvas hidden> mede 0×0.
+    canvas3D.hidden = false;
+    canvas.hidden = true;
+    try { usou3D = window.EDS_initHeroScene3D(canvas3D); } catch (e) { usou3D = false; }
+    if (!usou3D) { canvas3D.hidden = true; canvas.hidden = false; }
+  }
+  if (canvas && !reduced && !usou3D) {
     const ctx = canvas.getContext("2d");
-    const blobs = [
-      { x: .72, y: .35, r: .42, c: "rgba(71, 78, 208, .55)",  dx: .00012, dy: .00009 },
-      { x: .35, y: .70, r: .38, c: "rgba(110, 231, 200, .22)", dx: -.0001, dy: .00011 },
-      { x: .85, y: .85, r: .30, c: "rgba(143, 153, 255, .35)", dx: -.00008, dy: -.0001 },
-    ];
-    let w, h, raf, t0 = performance.now();
-    const resize = () => { const r = canvas.getBoundingClientRect(); w = canvas.width = Math.round(r.width * .5); h = canvas.height = Math.round(r.height * .5); };
-    const draw = (now) => {
-      const t = now - t0;
-      ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = "lighter";
-      blobs.forEach((b, i) => {
-        const x = (b.x + Math.sin(t * b.dx + i) * .08) * w;
-        const y = (b.y + Math.cos(t * b.dy + i * 2) * .08) * h;
-        const r = b.r * Math.max(w, h);
-        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
-        g.addColorStop(0, b.c); g.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    const heroSection = canvas.closest(".hero");
+    const CORES = ["79, 227, 255", "143, 123, 255", "110, 233, 255"];
+    let w, h, dpr, raf, particles = [];
+    const pointer = { x: .5, y: .42, active: false };
+
+    const N = () => (w < 640 ? 60 : w < 1100 ? 100 : 150);
+
+    const seed = () => {
+      const n = N();
+      particles = Array.from({ length: n }, () => {
+        const z = Math.random(); // 0 = fundo, 1 = frente
+        return {
+          x: Math.random(), y: Math.random(), z,
+          vx: (Math.random() - .5) * .00018,
+          vy: (Math.random() - .5) * .00018,
+          r: .6 + z * 1.8,
+          c: CORES[(Math.random() * CORES.length) | 0],
+          tw: Math.random() * Math.PI * 2, // fase do cintilar
+        };
       });
+    };
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 1.6);
+      w = canvas.width = Math.round(rect.width * dpr);
+      h = canvas.height = Math.round(rect.height * dpr);
+      seed();
+    };
+
+    const onMove = (clientX, clientY) => {
+      const rect = heroSection.getBoundingClientRect();
+      pointer.x = (clientX - rect.left) / rect.width;
+      pointer.y = (clientY - rect.top) / rect.height;
+      pointer.active = pointer.x >= 0 && pointer.x <= 1 && pointer.y >= 0 && pointer.y <= 1;
+    };
+    heroSection.addEventListener("pointermove", (e) => onMove(e.clientX, e.clientY), { passive: true });
+    heroSection.addEventListener("pointerleave", () => { pointer.active = false; }, { passive: true });
+
+    let t = 0;
+    const draw = () => {
+      t += 1;
+      ctx.clearRect(0, 0, w, h);
+
+      /* Linhas de constelação entre partículas próximas e "na frente" */
+      ctx.lineWidth = 1;
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
+        if (a.z < .35) continue;
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j];
+          if (b.z < .35) continue;
+          const dx = (a.x - b.x) * w, dy = (a.y - b.y) * h;
+          const d = Math.hypot(dx, dy);
+          const max = 90 * dpr;
+          if (d < max) {
+            ctx.strokeStyle = `rgba(${a.c}, ${.09 * (1 - d / max) * a.z})`;
+            ctx.beginPath(); ctx.moveTo(a.x * w, a.y * h); ctx.lineTo(b.x * w, b.y * h); ctx.stroke();
+          }
+        }
+      }
+
+      /* Partículas: deriva lenta + repulsão suave ao redor do ponteiro */
+      particles.forEach((p) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -.05) p.x = 1.05; if (p.x > 1.05) p.x = -.05;
+        if (p.y < -.05) p.y = 1.05; if (p.y > 1.05) p.y = -.05;
+
+        let px = p.x, py = p.y;
+        if (pointer.active) {
+          const dx = p.x - pointer.x, dy = (p.y - pointer.y) * (h / w);
+          const dist = Math.hypot(dx, dy);
+          const reach = .16 * (.4 + p.z);
+          if (dist < reach) {
+            const force = (1 - dist / reach) * .05 * p.z;
+            px += (dx / (dist || 1)) * force;
+            py += (dy / (dist || 1)) * force;
+          }
+        }
+
+        const glow = .55 + Math.sin(t * .02 + p.tw) * .25;
+        const rad = p.r * dpr * (1.4 + p.z);
+        const g = ctx.createRadialGradient(px * w, py * h, 0, px * w, py * h, rad * 3.2);
+        g.addColorStop(0, `rgba(${p.c}, ${glow * (.35 + p.z * .45)})`);
+        g.addColorStop(1, `rgba(${p.c}, 0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(px * w, py * h, rad * 3.2, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = `rgba(${p.c}, ${Math.min(1, glow + .25)})`;
+        ctx.beginPath(); ctx.arc(px * w, py * h, rad, 0, Math.PI * 2); ctx.fill();
+      });
+
       raf = requestAnimationFrame(draw);
     };
+
     resize(); window.addEventListener("resize", resize, { passive: true });
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { if (!raf) raf = requestAnimationFrame(draw); } else { cancelAnimationFrame(raf); raf = 0; } });
     io.observe(canvas);
+  }
+
+  /* ---- Mockups 3D dos apps na vitrine ----
+     Ao contrário da cena do Hero (corredor + neblina + várias luzes, bem
+     mais pesada), essa cena é 3 malhas simples com um único contexto WebGL
+     — cabe tranquilamente em celular. Regra bem mais permissiva: qualquer
+     tela a partir de ~380px (ou seja, praticamente todo celular moderno),
+     só respeitando "reduzir movimento" e a existência de WebGL de verdade. */
+  if (!reduced && window.innerWidth >= 340 && window.EDS_initProductScene3D) {
+    try { window.EDS_initProductScene3D(); } catch (e) { /* mantém os cards planos */ }
   }
 
   /* ---- Contadores (sobem quando entram na tela) ---- */
