@@ -98,8 +98,7 @@ window.EDS_initProductScene3D = function () {
       const group = items[i];
       const r = el.getBoundingClientRect();
       const onScreen = r.bottom > 0 && r.top < vh && r.right > 0 && r.left < vw && r.width > 4;
-      group.visible = onScreen;
-      if (!onScreen) return;
+      if (!onScreen) { group.visible = false; return; }
 
       const x = Math.round(r.left), yTop = Math.round(r.top);
       const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
@@ -117,6 +116,11 @@ window.EDS_initProductScene3D = function () {
       group.rotation.x = Math.sin(t * 0.42 + ph * 1.3) * 0.16 - pointer.y * 0.22;
       group.rotation.z = Math.sin(t * 0.28 + ph) * 0.05;
       group.position.y = Math.sin(t * 0.9 + ph) * 0.09;
+
+      // Um telefone por recorte: `render` desenha a cena INTEIRA, entao, sem
+      // esconder os outros, o card do PlanejaEdge saia com o print do
+      // LicitaEdge empilhado em cima (todos os grupos ficam na origem).
+      items.forEach((g, j) => { g.visible = j === i; });
 
       renderer.render(scene, camera);
     });
