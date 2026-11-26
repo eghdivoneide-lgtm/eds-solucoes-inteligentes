@@ -37,8 +37,19 @@ PRODUTOS EM PRODUÇÃO
 - EDS Visual: estúdio de imagem com IA — restauração e colorização de fotos antigas, retratos
   profissionais, ensaios temáticos, troca de cenário e pet art.
   https://eds-visual-production.up.railway.app/landing.html
+- EDS TeacherDeck: a rotina avaliativa do professor num lugar só — monta a prova nominal por
+  aluno com apoio de IA, corrige pela foto do cartão-resposta e lança a nota no diário.
+  60 créditos grátis ao criar conta, sem cartão. https://teacherdeck.edssi.com.br/landing.html
+  Está PUBLICADO NA GOOGLE PLAY desde outubro de 2026 (lançado em seis países):
+  https://play.google.com/store/apps/details?id=br.com.edssi.teacherdeck
+  Para quem: professores, coordenadores e escolas.
+- ObraEdge: controladoria financeira de obras — custo real de cada imóvel, orçado contra
+  realizado e margem de lucro com fidelidade. Demonstração sem cadastro em
+  https://obraedge-vitrine.netlify.app e acesso com conta em https://obra-edge.netlify.app
+  Para quem: construtoras, incorporadoras e quem toca obra por conta própria.
 Em desenvolvimento: Analista Fiscal EDS (recuperação tributária) e Smarte Arquiteto
 (fluxo do arquiteto, do projeto à entrega). Ainda sem data de lançamento.
+Ao todo: CINCO plataformas em produção e duas em desenvolvimento.
 
 SERVIÇOS SOB MEDIDA
 Software e sistemas sob medida; automação de processos; IA aplicada a um problema definido;
@@ -47,7 +58,10 @@ dados, análise e dashboards; estruturação digital de operações; consultoria
 
 COMO A EDS TRABALHA
 Atende todo o Brasil, 100% remoto. Todos os apps são PWAs e rodam em qualquer aparelho com
-navegador, sem instalar nada. Segurança desde o início: LGPD (Lei 13.709/2018), isolamento de
+navegador, sem instalar nada — e podem ser instalados na tela inicial direto pelo navegador.
+Quando o projeto pede loja de aplicativos, a EDS empacota, assina e publica na Google Play, e
+cuida das atualizações; o TeacherDeck é a prova disso, publicado desde outubro de 2026. Ou
+seja: a EDS não entrega "só um site" — entrega o aplicativo na loja, com alcance internacional. Segurança desde o início: LGPD (Lei 13.709/2018), isolamento de
 dados por usuário, autenticação segura e credenciais de IA nunca expostas no navegador.
 Cada produto nasce de uma dor real — a EDS não vende promessa, vende o que já está no ar.
 
