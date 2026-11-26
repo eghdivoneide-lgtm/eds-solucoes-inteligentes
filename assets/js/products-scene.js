@@ -87,7 +87,13 @@ window.EDS_initProductScene3D = function () {
   const frame = () => {
     if (!running) return;
     t += 1 / 60;
-    const vw = window.innerWidth, vh = window.innerHeight;
+    // Medir a caixa REAL do canvas, nunca window.innerWidth/innerHeight: no
+    // celular `100vh` vale a altura com a barra do navegador escondida, que
+    // nao e a mesma de innerHeight enquanto a barra aparece. Com o buffer
+    // dimensionado por innerHeight e o canvas esticado em 100vh, o recorte
+    // saia deslocado e o telefone "voava" por cima dos outros cards.
+    const box = canvas.getBoundingClientRect();
+    const vw = Math.max(1, Math.round(box.width)), vh = Math.max(1, Math.round(box.height));
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
     renderer.setSize(vw, vh, false);
     renderer.setScissorTest(true);
@@ -97,10 +103,12 @@ window.EDS_initProductScene3D = function () {
     alvos.forEach(({ frame: el }, i) => {
       const group = items[i];
       const r = el.getBoundingClientRect();
-      const onScreen = r.bottom > 0 && r.top < vh && r.right > 0 && r.left < vw && r.width > 4;
+      const onScreen = r.bottom > box.top && r.top < box.bottom
+        && r.right > box.left && r.left < box.right && r.width > 4;
       if (!onScreen) { group.visible = false; return; }
 
-      const x = Math.round(r.left), yTop = Math.round(r.top);
+      // Coordenadas relativas ao canvas, nao a janela.
+      const x = Math.round(r.left - box.left), yTop = Math.round(r.top - box.top);
       const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
       const yBottom = Math.round(vh - yTop - h); // origem do viewport WebGL é embaixo-esquerda
       vpBox.set(x, yBottom, w, h);
@@ -132,7 +140,12 @@ window.EDS_initProductScene3D = function () {
   const stop = () => { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; };
   const io = new IntersectionObserver((entries) => { entries.some((e) => e.isIntersecting) ? start() : stop(); }, { threshold: 0.05 });
   alvos.forEach(({ frame: el }) => io.observe(el));
-  window.addEventListener("resize", () => { renderer.setSize(window.innerWidth, window.innerHeight, false); }, { passive: true });
+  // Redimensionar aqui e redundante (o `frame` ja mede a caixa do canvas a cada
+  // quadro), mas mantem o buffer coerente se a janela mudar com a cena parada.
+  window.addEventListener("resize", () => {
+    const b = canvas.getBoundingClientRect();
+    renderer.setSize(Math.max(1, Math.round(b.width)), Math.max(1, Math.round(b.height)), false);
+  }, { passive: true });
 
   // Esmaece o frame CSS plano (em vez de sumir de golpe) — dá tempo das
   // texturas carregarem antes da troca, sem "flash" de vazio no meio.
