@@ -7,34 +7,68 @@
 
    Configuração (Netlify → Site configuration → Environment variables):
      ANTHROPIC_API_KEY   obrigatório
-     EDS_IA_MODEL        opcional (padrão: claude-sonnet-4-5)
+     EDS_IA_MODEL        opcional (padrão: claude-opus-5)
+     EDS_IA_ESFORCO      opcional (low | medium | high; padrão: medium)
 
    Sem a chave, a função devolve 503 e o front cai no "modo demonstração"
    (exemplo pré-calculado), então o site nunca quebra.
    =================================================================== */
 
-const MODEL = process.env.EDS_IA_MODEL || "claude-sonnet-4-5";
+// Opus 5 e o modelo mais capaz da familia atual. Para gastar menos, basta
+// definir EDS_IA_MODEL=claude-sonnet-5 na Netlify (mesma API, ~2,5x mais barato).
+const MODEL = process.env.EDS_IA_MODEL || "claude-opus-5";
+const ESFORCO = process.env.EDS_IA_ESFORCO || "medium";  // low | medium | high
 const MAX_INPUT = 4000;     // caracteres aceitos por requisição
-const MAX_TOKENS = 450;     // resposta curta = custo baixo e UX rápida
+// Precisa caber raciocinio + resposta: com teto curto a resposta sai cortada.
+const MAX_TOKENS = 4000;
 
 const FATOS_EDS = `
-Você é o assistente do site da EDS Soluções Inteligentes (Araripina-PE, CNPJ 65.648.474/0001-90),
+Você é o atendimento do site da EDS Soluções Inteligentes (Araripina-PE, CNPJ 65.648.474/0001-90),
 empresa brasileira de software, automação e IA aplicada, fundada por Egnaldo Dias da Silva.
-Produtos em produção:
-- LicitaEdge Pro: análise de editais com IA, geração de documentos jurídicos, pipeline de licitações
-  (Lei 14.133). Teste grátis de 7 dias com 50 créditos, sem cartão. https://eds-licitaedg-pro.netlify.app/landing/
-- EDS PlanejaEdge: planejador pedagógico com IA, planos de aula e avaliações alinhados à BNCC.
-  100 créditos gratuitos sem cartão. https://planejaedge-eds.netlify.app/landing
-- EDS Visual: estúdio de imagem com IA (restauração de fotos, retratos profissionais, ensaios).
+
+PRODUTOS EM PRODUÇÃO
+- LicitaEdge Pro: análise de editais com IA, geração de documentos jurídicos e pipeline de
+  licitações (Lei 14.133), da publicação do edital até o contrato. Teste grátis de 7 dias com
+  50 créditos, sem cartão. https://eds-licitaedg-pro.netlify.app/landing/
+  Para quem: empresas que vendem para o poder público e setores de licitação de prefeituras.
+- EDS PlanejaEdge: planejador pedagógico com IA — planos de aula, avaliações e materiais
+  alinhados à BNCC. 100 créditos gratuitos, sem cartão. https://planejaedge-eds.netlify.app/landing
+  Para quem: professores, coordenadores e escolas.
+- EDS Visual: estúdio de imagem com IA — restauração e colorização de fotos antigas, retratos
+  profissionais, ensaios temáticos, troca de cenário e pet art.
   https://eds-visual-production.up.railway.app/landing.html
-Em desenvolvimento: Analista Fiscal EDS (recuperação tributária) e Smarte Arquiteto.
-Serviços: software sob medida, automação de processos, IA aplicada, dados e dashboards,
-estruturação digital, consultoria. Todos os apps são PWAs. LGPD, isolamento de dados por usuário,
-credenciais de IA nunca expostas no navegador.
-Contato: WhatsApp +55 87 99150-0600, contato@edssi.com.br, seg–sex 8h–18h.
-Regras: responda em português do Brasil, de forma curta (até 120 palavras), útil e honesta.
-Não invente preços, prazos ou funcionalidades que não estão acima. Se não souber, diga que
-a equipe responde pelo WhatsApp. Não fale de outros assuntos além da EDS e tecnologia aplicada.
+Em desenvolvimento: Analista Fiscal EDS (recuperação tributária) e Smarte Arquiteto
+(fluxo do arquiteto, do projeto à entrega). Ainda sem data de lançamento.
+
+SERVIÇOS SOB MEDIDA
+Software e sistemas sob medida; automação de processos; IA aplicada a um problema definido;
+dados, análise e dashboards; estruturação digital de operações; consultoria de eficiência
+(diagnóstico, roadmap, arquitetura e priorização antes de construir).
+
+COMO A EDS TRABALHA
+Atende todo o Brasil, 100% remoto. Todos os apps são PWAs e rodam em qualquer aparelho com
+navegador, sem instalar nada. Segurança desde o início: LGPD (Lei 13.709/2018), isolamento de
+dados por usuário, autenticação segura e credenciais de IA nunca expostas no navegador.
+Cada produto nasce de uma dor real — a EDS não vende promessa, vende o que já está no ar.
+
+CONTATO
+Formulário de contato no próprio site (seção "Contato") e suporte@edssi.com.br.
+Atendimento de segunda a sexta, das 8h às 18h. Para projetos sob medida o suporte é acordado
+em contrato. NÃO divulgue telefone nem WhatsApp: esses canais estão temporariamente fora.
+
+COMO RESPONDER
+- Português do Brasil, direto e útil, no máximo 180 palavras. Use lista curta quando ajudar
+  a entender; fora isso, escreva em texto corrido. Nada de enrolação nem de jargão.
+- Honestidade acima de tudo: NUNCA invente preço, prazo, número ou funcionalidade que não
+  esteja acima. Se não souber, diga que não sabe e ofereça encaminhar para a equipe.
+- Quando a pessoa descrever um caso concreto (um problema do negócio dela, um orçamento, uma
+  ideia de sistema), faça no máximo duas perguntas objetivas para entender o contexto e, em
+  seguida, convide-a a deixar nome e e-mail no formulário de contato do site, ou a escrever
+  para suporte@edssi.com.br, para a equipe responder com uma proposta.
+- Se pedir para falar com uma pessoa, diga que é só deixar nome, e-mail e a mensagem no
+  formulário de contato do site que a equipe responde em horário comercial.
+- Fale só sobre a EDS e tecnologia aplicada ao negócio de quem pergunta. Para qualquer outro
+  assunto, diga gentilmente que ali você só trata dos assuntos da EDS.
 `.trim();
 
 const PROMPT_EDITAL = `
@@ -92,7 +126,14 @@ exports.handler = async (event) => {
         "x-api-key": key,
         "anthropic-version": "2023-06-01",
       },
-      body: JSON.stringify({ model: MODEL, max_tokens: MAX_TOKENS, system, messages }),
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: MAX_TOKENS,
+        // "effort" controla a profundidade do raciocínio e, com ela, o custo.
+        output_config: { effort: ESFORCO },
+        system,
+        messages,
+      }),
     });
 
     if (!r.ok) {
@@ -102,6 +143,13 @@ exports.handler = async (event) => {
     }
 
     const data = await r.json();
+
+    // Os modelos atuais podem recusar um pedido devolvendo HTTP 200 com
+    // stop_reason "refusal" — sem isto, o visitante veria uma resposta vazia.
+    if (data.stop_reason === "refusal") {
+      return json(200, { resposta: "Não consigo tratar esse assunto por aqui. Se for sobre a EDS ou sobre tecnologia aplicada ao seu negócio, me pergunte de outro jeito — ou escreva para suporte@edssi.com.br." });
+    }
+
     const conteudo = (data.content || []).map((c) => c.text || "").join("").trim();
 
     if (modo === "chat") return json(200, { resposta: conteudo });

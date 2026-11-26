@@ -1,12 +1,7 @@
 /* ===================================================================
    EDS Soluções Inteligentes — Script principal
-   Sem dependências. Menu, header, revelações e formulário → WhatsApp.
+   Sem dependências. Menu, header, revelações e formulário de contato.
    =================================================================== */
-
-/* >>> CONFIGURE AQUI <<<
-   Número do WhatsApp em formato internacional, somente dígitos:
-   DDI (55) + DDD + número. Ex.: "5587991500600"                       */
-const WHATSAPP_NUMERO = "5587991500600";
 
 /* Mascote "Smartcoach": desligado por padrão no layout v2 (distrai do
    conteúdo e pesa na percepção profissional). Para reativar: true. */
@@ -17,20 +12,9 @@ const EDS_MASCOTE = false;
 const EDS_IA_ENDPOINT = "/.netlify/functions/ia";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const wppBase = `https://wa.me/${WHATSAPP_NUMERO}`;
-
   /* ---- Ano do rodapé ---- */
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* ---- Links de WhatsApp estáticos ---- */
-  const msgPadrao = encodeURIComponent(
-    "Olá! Vim pelo site da EDS Soluções Inteligentes e gostaria de conversar sobre um projeto."
-  );
-  ["whatsLink", "whatsCta", "whatsFloat"].forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) el.href = `${wppBase}?text=${msgPadrao}`;
-  });
 
   /* ---- Header com fundo ao rolar ---- */
   const header = document.getElementById("header");
@@ -80,20 +64,21 @@ document.addEventListener("DOMContentLoaded", () => {
     reveals.forEach((el) => el.classList.add("visible"));
   }
 
-  /* ---- Formulário → WhatsApp ---- */
+  /* ---- Formulário de contato → Netlify Forms ----
+     Antes isto abria o WhatsApp do VISITANTE com o texto pronto: quem enviava
+     era ele, nada ficava gravado e o lead só existia na conversa do celular.
+     Agora o envio é POST para a própria Netlify, que guarda a mensagem e avisa
+     a equipe — sem o visitante precisar de WhatsApp nenhum. */
   const form = document.getElementById("contactForm");
   const hint = document.getElementById("formHint");
   if (form && hint) {
-    form.addEventListener("submit", (ev) => {
+    const botao = document.getElementById("contactSubmit");
+    form.addEventListener("submit", async (ev) => {
       ev.preventDefault();
       hint.className = "form-hint";
 
       const nome = form.nome.value.trim();
-      const email = form.email.value.trim();
-      const telefone = form.telefone.value.trim();
-      const assunto = form.assunto.value;
       const mensagem = form.mensagem.value.trim();
-
       if (!nome || !mensagem) {
         hint.textContent = "Por favor, preencha pelo menos o nome e a mensagem.";
         hint.classList.add("err");
@@ -101,23 +86,24 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const linhas = [
-        "*Novo contato pelo site — EDS Soluções Inteligentes*",
-        "",
-        `*Nome:* ${nome}`,
-        email ? `*E-mail:* ${email}` : null,
-        telefone ? `*Telefone:* ${telefone}` : null,
-        `*Assunto:* ${assunto}`,
-        "",
-        "*Mensagem:*",
-        mensagem,
-      ].filter(Boolean);
-
-      window.open(`${wppBase}?text=${encodeURIComponent(linhas.join("\n"))}`, "_blank", "noopener");
-
-      hint.textContent = "Abrindo o WhatsApp… se não abrir, verifique o bloqueador de pop-ups.";
-      hint.classList.add("ok");
-      form.reset();
+      if (botao) { botao.disabled = true; botao.textContent = "Enviando…"; }
+      hint.textContent = "Enviando…";
+      try {
+        const r = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(new FormData(form)).toString(),
+        });
+        if (!r.ok) throw new Error(r.status);
+        hint.textContent = "Mensagem enviada. Respondemos no seu e-mail em horário comercial.";
+        hint.classList.add("ok");
+        form.reset();
+      } catch {
+        // Nunca deixar o visitante sem saída se o envio falhar.
+        hint.innerHTML = 'Não consegui enviar agora. Escreva para <a href="mailto:suporte@edssi.com.br">suporte@edssi.com.br</a> ou use o atendimento aqui do site.';
+        hint.classList.add("err");
+      }
+      if (botao) { botao.disabled = false; botao.textContent = "Enviar mensagem"; }
     });
   }
 });
@@ -367,5 +353,11 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     aF?.addEventListener("submit", (e) => { e.preventDefault(); const q = aI.value.trim(); if (q.length < 2) return; aI.value = ""; ask(q); });
     aChips?.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { aChips.remove(); ask(b.textContent); } });
+
+    // Qualquer botão com data-abrir-assistente abre o atendimento (substituiu
+    // os antigos atalhos de WhatsApp espalhados pela página).
+    document.querySelectorAll("[data-abrir-assistente]").forEach((b) => {
+      b.addEventListener("click", (e) => { e.preventDefault(); open(true); aP.scrollIntoView({ block: "nearest" }); });
+    });
   }
 });

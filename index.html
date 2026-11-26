@@ -634,7 +634,7 @@
           <details class="faq-item">
             <summary>Como funciona o suporte?
               <svg class="faq-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
-            <p>De segunda a sexta, das 8h às 18h, por WhatsApp e e-mail. Para projetos sob medida, o suporte é acordado em contrato. Precisa de ajuda agora? <a href="https://wa.me/5587991500600" target="_blank" rel="noopener">Chame no WhatsApp.</a></p>
+            <p>De segunda a sexta, das 8h às 18h, pelo atendimento do site e por e-mail. Para projetos sob medida, o suporte é acordado em contrato. Precisa de ajuda agora? <button type="button" class="link-inline" data-abrir-assistente>Abra o atendimento aqui no site.</button></p>
           </details>
           <details class="faq-item">
             <summary>Meus dados estão protegidos?
@@ -669,13 +669,16 @@
           <p class="eyebrow">Contato</p>
           <h2>Vamos entender o seu desafio</h2>
           <p class="section-lead">
-            Preencha os campos abaixo. A mensagem é organizada e enviada direto ao nosso WhatsApp —
+            Preencha os campos abaixo. A mensagem chega direto para a nossa equipe —
             respondemos o mais rápido possível, em horário comercial.
           </p>
         </header>
 
         <div class="contact-grid">
-          <form class="contact-form reveal" id="contactForm" novalidate>
+          <form class="contact-form reveal" id="contactForm" name="contato" method="POST"
+                data-netlify="true" netlify-honeypot="bot-field" novalidate>
+            <input type="hidden" name="form-name" value="contato" />
+            <p class="hp" hidden aria-hidden="true"><label>Deixe em branco: <input name="bot-field" /></label></p>
             <div class="field">
               <label for="nome">Nome</label>
               <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name" required />
@@ -706,18 +709,18 @@
               <label for="mensagem">Mensagem</label>
               <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva o contexto, o problema ou a ideia. Quanto mais concreto, melhor a resposta." required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar pelo WhatsApp</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="contactSubmit">Enviar mensagem</button>
             <p class="form-hint" id="formHint" role="status" aria-live="polite"></p>
           </form>
 
           <aside class="contact-info reveal">
             <h3>Outras formas de falar com a EDS</h3>
-            <a class="info-item" id="whatsLink" href="#" target="_blank" rel="noopener">
+            <button type="button" class="info-item" data-abrir-assistente>
               <span class="info-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.8L3 20.5l1.4-4.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
               </span>
-              <span><strong>WhatsApp</strong><span class="info-sub">+55 (87) 99150-0600</span></span>
-            </a>
+              <span><strong>Atendimento aqui no site</strong><span class="info-sub">Resposta na hora, sem sair da página</span></span>
+            </button>
             <a class="info-item" id="mailLink" href="mailto:contato@edssi.com.br">
               <span class="info-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -738,10 +741,10 @@
             </div>
             <div class="info-cta">
               <p>Prefere ir direto ao ponto?</p>
-              <a class="btn btn-whats btn-block" id="whatsCta" href="#" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-                Chamar no WhatsApp
-              </a>
+              <button type="button" class="btn btn-primary btn-block" data-abrir-assistente>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.8L3 20.5l1.4-4.2A8.4 8.4 0 1 1 21 11.5z"/></svg>
+                Abrir o atendimento
+              </button>
             </div>
           </aside>
         </div>
@@ -784,7 +787,7 @@
 
       <div class="footer-col">
         <h4>Contato</h4>
-        <a href="https://wa.me/5587991500600" target="_blank" rel="noopener">WhatsApp · (87) 99150-0600</a>
+        <button type="button" class="link-inline" data-abrir-assistente>Atendimento no site</button>
         <a href="https://t.me/AtendimentoEDSSI_bot" target="_blank" rel="noopener">Telegram · Suporte IA 24h</a>
         <a href="mailto:contato@edssi.com.br">contato@edssi.com.br</a>
         <span class="footer-static">Segunda a sexta, 8h às 18h</span>
@@ -798,11 +801,6 @@
     </div>
   </footer>
 
-    <a href="#" id="whatsFloat" class="whats-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
-      <path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l-.999 3.648 3.978-1.207zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
-    </svg>
-  </a>
 
   <!-- ============ ASSISTENTE — pergunte à EDS ============ -->
   <div class="assist" id="assist">
@@ -825,6 +823,7 @@
         <button type="button">Como testar o LicitaEdge grátis?</button>
         <button type="button">Vocês fazem sistema sob medida?</button>
         <button type="button">Meus dados ficam protegidos?</button>
+        <button type="button">Quero falar com alguém da equipe</button>
       </div>
       <form class="assist-form" id="assistForm">
         <input type="text" id="assistInput" maxlength="600" placeholder="Escreva sua pergunta…" autocomplete="off" />
@@ -832,7 +831,7 @@
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
       </form>
-      <p class="assist-foot">Respostas geradas por IA com base nas informações públicas da EDS. Para orçamento, fale no WhatsApp.</p>
+      <p class="assist-foot">Respostas geradas por IA com base nas informações públicas da EDS. Para orçamento ou para falar com uma pessoa, é só pedir aqui mesmo.</p>
     </div>
   </div>
 
