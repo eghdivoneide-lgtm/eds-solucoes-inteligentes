@@ -475,6 +475,18 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
 .info-cta { margin-top: 1.7rem; padding-top: 1.6rem; border-top: 1px solid var(--line-soft); }
 .info-cta p { font-size: .9rem; color: var(--muted); margin-bottom: .85rem; }
 
+/* O atalho de atendimento é um <button> (abre o painel), mas precisa ler como
+   os outros itens da lista — por isso zera a aparência padrão de botão. */
+button.info-item { width: 100%; text-align: left; background: none; border-top: 0; border-left: 0;
+  border-right: 0; font: inherit; color: inherit; cursor: pointer; }
+button.info-item:hover { color: var(--accent); }
+button.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--accent); }
+
+/* Link em meio a texto que na verdade é um botão (abre o atendimento). */
+.link-inline { background: none; border: 0; padding: 0; font: inherit; color: var(--accent);
+  text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.link-inline:hover { filter: brightness(1.15); }
+
 /* ============ 14. FOOTER ============ */
 .site-footer { border-top: 1px solid var(--line); }
 .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; padding: clamp(44px, 6vw, 72px) 24px; border-bottom: 1px solid var(--line-soft); }
