@@ -276,9 +276,8 @@ document.addEventListener("DOMContentLoaded", () => {
      — cabe tranquilamente em celular. Regra bem mais permissiva: qualquer
      tela a partir de ~380px (ou seja, praticamente todo celular moderno),
      só respeitando "reduzir movimento" e a existência de WebGL de verdade. */
-  if (!reduced && window.innerWidth >= 340 && window.EDS_initProductScene3D) {
-    try { window.EDS_initProductScene3D(); } catch (e) { /* mantém os cards planos */ }
-  }
+  /* O 3D em WebGL dos produtos foi removido: a inclinação agora é CSS puro.
+     Ver o comentário em style.css, perto de `.appslide-device`. */
 
   /* ---- Contadores (sobem quando entram na tela) ---- */
   const counters = document.querySelectorAll("[data-count]");
