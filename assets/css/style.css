@@ -475,6 +475,13 @@ a.info-item:hover .info-icon { border-color: var(--accent-line); color: var(--ac
 .info-cta { margin-top: 1.7rem; padding-top: 1.6rem; border-top: 1px solid var(--line-soft); }
 .info-cta p { font-size: .9rem; color: var(--muted); margin-bottom: .85rem; }
 
+/* Selo da Google Play no card do produto que esta publicado na loja. */
+.appslide-play { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem;
+  padding: .55rem .9rem; border: 1px solid var(--line); border-radius: var(--radius);
+  font-size: .86rem; font-weight: 600; color: var(--heading); text-decoration: none;
+  transition: border-color .2s, color .2s, transform .2s; }
+.appslide-play:hover { border-color: var(--accent-line); color: var(--accent); transform: translateY(-2px); }
+
 /* O atalho de atendimento é um <button> (abre o painel), mas precisa ler como
    os outros itens da lista — por isso zera a aparência padrão de botão. */
 button.info-item { width: 100%; text-align: left; background: none; border-top: 0; border-left: 0;
