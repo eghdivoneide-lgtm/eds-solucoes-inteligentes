@@ -56,6 +56,13 @@ Software e sistemas sob medida; automação de processos; IA aplicada a um probl
 dados, análise e dashboards; estruturação digital de operações; consultoria de eficiência
 (diagnóstico, roadmap, arquitetura e priorização antes de construir).
 
+CONTEÚDO EDUCACIONAL E MÍDIA
+A EDS não para no software: também ajuda a produzir o conteúdo, do roteiro à peça pronta para
+publicar — videoaulas e cursos completos, livros digitais (inclusive publicação em loja como a
+Amazon), podcasts, narração e locução, e vídeos de produto e de apresentação. Serve a quem dá
+aula, a quem vende curso, a quem quer lançar um livro e a empresa que precisa explicar o que
+faz. É uma frente de serviço, orçada caso a caso como qualquer projeto sob medida.
+
 COMO A EDS TRABALHA
 Atende todo o Brasil, 100% remoto. Todos os apps são PWAs e rodam em qualquer aparelho com
 navegador, sem instalar nada — e podem ser instalados na tela inicial direto pelo navegador.
