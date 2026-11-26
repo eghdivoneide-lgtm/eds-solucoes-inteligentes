@@ -11,6 +11,10 @@ const EDS_MASCOTE = false;
    Netlify, o site usa o "modo demonstração" com um exemplo pré-calculado. */
 const EDS_IA_ENDPOINT = "/.netlify/functions/ia";
 
+/* Atendimento humano: a função repassa a conversa para a equipe e traz de
+   volta a resposta dela. Sem a ponte configurada, o chat segue só com a IA. */
+const EDS_ATENDIMENTO = "/.netlify/functions/atendimento";
+
 document.addEventListener("DOMContentLoaded", () => {
   /* ---- Ano do rodapé ---- */
   const yearEl = document.getElementById("year");
@@ -97,6 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!r.ok) throw new Error(r.status);
         hint.textContent = "Mensagem enviada. Respondemos no seu e-mail em horário comercial.";
         hint.classList.add("ok");
+        // Avisa a equipe na hora, além de ficar gravado na Netlify.
+        fetch(EDS_ATENDIMENTO, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ acao: "aviso", titulo: "Novo contato pelo site",
+            corpo: `Nome: ${nome}\nE-mail: ${form.email.value.trim() || "-"}\n` +
+                   `Telefone: ${form.telefone.value.trim() || "-"}\nAssunto: ${form.assunto.value}\n\n${mensagem}` }),
+        }).catch(() => { /* o lead ja esta gravado; o aviso e um extra */ });
         form.reset();
       } catch {
         // Nunca deixar o visitante sem saída se o envio falhar.
@@ -338,19 +349,76 @@ document.addEventListener("DOMContentLoaded", () => {
     aC?.addEventListener("click", () => open(false));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !aP.hidden) open(false); });
     const add = (cls, txt) => { const d = document.createElement("div"); d.className = `msg ${cls}`; d.textContent = txt; aL.appendChild(d); aL.scrollTop = aL.scrollHeight; return d; };
+
+    /* ---- Ligação com a equipe ----
+       TODA mensagem do visitante é repassada, mesmo quando a IA responde
+       sozinha: a equipe acompanha a conversa inteira. Quando uma pessoa
+       responde, a IA se cala naquela conversa para as duas não falarem
+       junto, e a resposta aparece como "EDS Suporte". */
+    let conversa = null, humano = false, ultima = 0, sondando = null;
+    try { conversa = sessionStorage.getItem("eds_conversa") || null; } catch { /* aba privada */ }
+
+    const repassar = (texto) => fetch(EDS_ATENDIMENTO, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ acao: "mensagem", conversa, texto }),
+    }).then((r) => r.json()).then((d) => {
+      if (d && d.conversa) {
+        conversa = d.conversa;
+        try { sessionStorage.setItem("eds_conversa", conversa); } catch {}
+        sondar();
+      }
+    }).catch(() => { /* a ponte pode estar fora; o chat não pode parar */ });
+
+    const sondar = () => {
+      if (sondando || !conversa) return;
+      sondando = setInterval(async () => {
+        if (aP.hidden || !conversa) return;
+        try {
+          const r = await fetch(`${EDS_ATENDIMENTO}?conversa=${encodeURIComponent(conversa)}&desde=${ultima}`);
+          const d = await r.json().catch(() => ({}));
+          for (const m of (d.mensagens || [])) {
+            ultima = Math.max(ultima, m.ts || 0);
+            if (!humano) {
+              humano = true;
+              add("msg-ai msg-equipe", "Uma pessoa da equipe entrou na conversa.");
+            }
+            add("msg-ai msg-equipe", m.texto);
+          }
+        } catch { /* silêncio: sondagem não pode incomodar o visitante */ }
+      }, 6000);
+    };
+    if (conversa) sondar();
+
     const ask = async (q) => {
       add("msg-user", q); historico.push({ role: "user", content: q });
+      repassar(q);
+
+      // Com uma pessoa na linha, a IA não responde por cima dela.
+      if (humano) { aL.scrollTop = aL.scrollHeight; return; }
+
       const wait = add("msg-ai msg-wait", "pensando…");
       try {
         const r = await fetch(EDS_IA_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ modo: "chat", texto: q, historico: historico.slice(0, -1) }) });
         const data = await r.json().catch(() => ({}));
         let resp = data.resposta;
-        if (r.status === 503 || r.status === 404 || (!data.resposta && !data.erro)) resp = "O assistente ao vivo ainda não está ativo neste ambiente. Fale com a equipe pelo WhatsApp: +55 87 99150-0600.";
-        if (!resp) resp = data.erro || "Não consegui responder agora. Tente de novo ou chame no WhatsApp.";
+        if (r.status === 503 || r.status === 404 || (!data.resposta && !data.erro)) resp = "O assistente ao vivo ainda não está ativo neste ambiente. Escreva para suporte@edssi.com.br que a equipe responde.";
+        if (!resp) resp = data.erro || "Não consegui responder agora. Tente de novo ou escreva para suporte@edssi.com.br.";
+        if (humano) return;   // a pessoa respondeu enquanto a IA pensava
         wait.className = "msg msg-ai"; wait.textContent = resp; historico.push({ role: "assistant", content: resp });
       } catch { wait.className = "msg msg-ai"; wait.textContent = "Falha de conexão. Tente novamente."; }
       aL.scrollTop = aL.scrollHeight;
     };
+
+    // Chamar uma pessoa de propósito.
+    const chamarEquipe = () => {
+      if (humano) return;
+      humano = true;
+      add("msg-ai msg-equipe", "Avisei a equipe. Pode escrever aqui mesmo que respondemos nesta conversa — em horário comercial, de segunda a sexta, das 8h às 18h.");
+      repassar("[o visitante pediu para falar com uma pessoa]");
+    };
+    document.querySelectorAll("[data-chamar-equipe]").forEach((b) => {
+      b.addEventListener("click", (e) => { e.preventDefault(); open(true); chamarEquipe(); });
+    });
     aF?.addEventListener("submit", (e) => { e.preventDefault(); const q = aI.value.trim(); if (q.length < 2) return; aI.value = ""; ask(q); });
     aChips?.addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { aChips.remove(); ask(b.textContent); } });
 
