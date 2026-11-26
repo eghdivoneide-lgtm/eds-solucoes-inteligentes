@@ -345,6 +345,11 @@ h3, h4 { font-stretch: 100%; letter-spacing: -.015em; }
 .app--indigo { background: radial-gradient(125% 135% at 82% 8%, #2d2f73 0%, #1b1d3c 44%, #0e0f22 100%); --app-accent: #9aa3ff; }
 .app--violet { background: radial-gradient(125% 135% at 82% 8%, #482a6f 0%, #281742 44%, #160b22 100%); --app-accent: #c098ff; }
 .app--slate  { background: radial-gradient(125% 135% at 82% 8%, #2e3647 0%, #1a212d 44%, #0e1219 100%); --app-accent: #a9b8ce; }
+/* Paleta propria de cada produto, puxada da marca dele. Antes o TeacherDeck
+   reusava o verde+dourado do LicitaEdge e o ObraEdge reusava o azul do
+   PlanejaEdge: dois cards com cara de copia um do outro. */
+.app--amber  { background: radial-gradient(125% 135% at 82% 8%, #3a3115 0%, #211b0d 44%, #100d06 100%); --app-accent: #e9c46a; }
+.app--steel  { background: radial-gradient(125% 135% at 82% 8%, #14455c 0%, #0c2a3a 44%, #05141f 100%); --app-accent: #5cc6e8; }
 /* coluna de texto */
 .appslide-brand { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: clamp(1.2rem, 3vw, 2rem); }
 .appslide-id { display: flex; align-items: center; gap: .6rem; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,.66); }
@@ -384,6 +389,8 @@ h3, h4 { font-stretch: 100%; letter-spacing: -.015em; }
 .app--azure.is-reverse  { background: radial-gradient(125% 135% at 18% 8%, #1d3766 0%, #13213b 44%, #0a1322 100%); }
 .app--indigo.is-reverse { background: radial-gradient(125% 135% at 18% 8%, #2d2f73 0%, #1b1d3c 44%, #0e0f22 100%); }
 .app--slate.is-reverse  { background: radial-gradient(125% 135% at 18% 8%, #2e3647 0%, #1a212d 44%, #0e1219 100%); }
+.app--amber.is-reverse  { background: radial-gradient(125% 135% at 18% 8%, #3a3115 0%, #211b0d 44%, #100d06 100%); }
+.app--steel.is-reverse  { background: radial-gradient(125% 135% at 18% 8%, #14455c 0%, #0c2a3a 44%, #05141f 100%); }
 @media (max-width: 860px) {
   .appslide { grid-template-columns: 1fr; gap: 2rem; }
   .appslide-copy { order: 0 !important; }
