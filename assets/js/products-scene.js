@@ -96,6 +96,17 @@ window.EDS_initProductScene3D = function () {
     const vw = Math.max(1, Math.round(box.width)), vh = Math.max(1, Math.round(box.height));
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
     renderer.setSize(vw, vh, false);
+
+    // APAGAR A TELA INTEIRA ANTES DE DESENHAR — e a parte que faltava.
+    // `render()` limpa so o que esta dentro do scissor da vez, entao tudo o que
+    // foi desenhado fora dele continuava gravado no canvas. Como o canvas e
+    // fixed e cobre a tela, o telefone ficava parado no lugar onde foi pintado
+    // pela ultima vez enquanto a pagina rolava por baixo: os "fantasmas" que
+    // apareciam ate no formulario de contato. No celular e gritante porque o
+    // recorte de cada card e pequeno e sobra muito canvas sem nunca ser limpo.
+    renderer.setScissorTest(false);
+    renderer.setViewport(0, 0, vw, vh);
+    renderer.clear();
     renderer.setScissorTest(true);
     rimA.intensity = 3.2 + Math.sin(t * 1.1) * 1.4;
     rimB.intensity = 2.6 + Math.cos(t * 0.95) * 1.2;
@@ -137,7 +148,16 @@ window.EDS_initProductScene3D = function () {
   };
 
   const start = () => { if (!running) { running = true; raf = requestAnimationFrame(frame); } };
-  const stop = () => { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; };
+  const stop = () => {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    // Sem isto o ultimo quadro fica congelado na tela depois que a vitrine sai de vista.
+    const b = canvas.getBoundingClientRect();
+    renderer.setScissorTest(false);
+    renderer.setViewport(0, 0, Math.max(1, Math.round(b.width)), Math.max(1, Math.round(b.height)));
+    renderer.clear();
+  };
   const io = new IntersectionObserver((entries) => { entries.some((e) => e.isIntersecting) ? start() : stop(); }, { threshold: 0.05 });
   alvos.forEach(({ frame: el }) => io.observe(el));
   // Redimensionar aqui e redundante (o `frame` ja mede a caixa do canvas a cada
